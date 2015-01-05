@@ -7,6 +7,8 @@ output: ioslides_presentation
 
 # Outline
 
+## Some new slide
+
 ## What are we doing today?
   1. Introduce each other
   2. Introduce R and some reasons why the course is focused on *programming*
