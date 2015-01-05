@@ -1,0 +1,64 @@
+---
+title: "Homework #1"
+author: "PSYC 798W, Scott Jackson"
+date: "January 5, 2015"
+output: rmarkdown::tufte_handout
+---
+
+# Homework #1
+**Due before 9:00:00 EST 2015-01-06**
+
+  1. Finish with any installation/sign-up steps that you did not complete already
+  2. (optional) Run through the installation process again
+    - getting a friend set up
+    - installing on another computer (e.g., desktop)
+    - re-installing on your computer
+  3. (required) Find a data set!
+  
+# Finding a data set
+  - Take some time to find a good data set
+  - For use throughout the rest of the course & the final project
+  - Requirements:
+    - multivariate (i.e., a bunch of records/rows, each with multiple variables/columns)
+    - mix of data types (two or more of the following):
+      - continuous or semi-continuous numbers
+      - categorical factors or groupings
+      - string/text data
+      - dates or timestamps
+    - interesting enough to keep you asking questions!
+  - Changing data sets later is okay, but highly dispreferred 
+  - *Take some time to find a good data set* -- don't just settle for the first thing you find!
+
+# Some places to look
+  - Your own work!
+  - [Google](http://lmgtfy.com/?q=public+data+sets) 
+  - R has lots of built-in data sets (also available in many packages)
+  - You can see all the available data sets in R by typing the command:
+
+```{r}
+data()
+```
+
+  - If one of the R data sets catches your eye, talk to me if you need some basic commands to take a peek at it.
+
+# Submitting this Homework assignment
+  - *Email me the data set*
+  - If it's really large, send me a link
+  - *Email me:*
+    1. List of variables you're interested in, with column names, plain English descriptions, and the TYPE of data in each variable (number, factor, text, time)
+    2. ONE sentence describing why this data is interesting to you
+    3. THREE initial questions you think you could ask and (at least partially) address with this data. Try to make the questions as SIMPLE as possible!
+  - I will reply with comments, and suggestions for changes if needed.
+  - This is the ONE assignment you can "re-do" later for credit, if I ask you to do something different.
+  - BEFORE 9am 1/6/2014 (I will check email timestamps)
+  - Even if you're not 100% decided, send me the above info for some possibility, by 9am, to receive credit
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,218 @@
+% Created 2015-01-05 Mon 07:50
+\documentclass{tufte-handout}
+
+\providecommand{\alert}[1]{\textbf{#1}}
+
+\title{PSYC798W: R Programming for Behavioral Sciences (Winter 2015)}
+\author{}
+\date{}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs Org-mode version 7.9.3f}}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Basic info}
+\label{sec-1}
+
+\begin{description}
+\item[Instructor:] Dr. Scott Jackson
+\item[Email:] \href{mailto:scottrj@umd.edu}{scottrj@umd.edu}
+\item[Office phone:] 301-226-8881
+\item[Class location:] BPS 1236
+\item[Time:] M-F, 9:00-12:00
+\item[Office hours:] 12:00-1:00, or by appointment
+\item[Office hours location:] TBD
+\end{description}
+\section*{Description}
+\label{sec-2}
+
+R\marginnote{\texttt{www.r-project.org}} is a programming language and environment designed for statistical analysis. It is free and open-source, and it includes integration with thousands of cutting-edge packages contributed by users from around the world. It has become a \emph{de facto} standard and \emph{lingua franca} for statistical analysis.  It is an incredibly powerful tool for data analysis and visualization, and thus an indispensable tool for any kind of quantitative work in the behavioral and social sciences. However, because many (if not most) students and researchers in these fields are not otherwise trained in programming techniques, learning R can be difficult, and poor understanding of programming concepts and techniques can create problems in analysis and reporting of results. 
+
+This course aims to give you a foundation in programming, in order to facilitate future work with R.  It is not a stats course, though we will probably discuss some statistics in passing.  The focus of the course is building concepts, skills, and habits to make you a better programmer, in order to get the most out of R.
+\section*{Goals}
+\label{sec-3}
+
+This course is organized around two sets of themes. First, there is the underlying rationale for why a programming language like R is a superior alternative to more limited graphical-interface programs like SPSS or spreadsheet programs like Excel.  You can think of the advantages of R as superpowers for doing research.  There are (at least) three of them:
+
+\begin{description}
+\item[Reproducibility] You can go back to see \textbf{exactly} what you did, and you can do it again, with virtually no effort.  This also makes what you do work better, and easier to improve upon.
+\item[Repetition] You can take something you did, and do it hundreds, thousands, or \emph{millions} of times (literally), with very little effort (though maybe some patience). This opens up new avenues like simulations or other kinds of industrial-strength analysis.
+\item[Re-usable code] You can take code you write and apply it to new situations. This makes what you do more useful, and more share-able.  Share-ability leads to fame and fortune.
+\end{description}
+
+In this course, you will learn the basics of each of these superpowers.  You will be able to:
+\begin{itemize}
+\item work in a more reproducible way using version control, scripts, and notebooks.
+\item repeat analysis in loops and other structures to be able to perform large-scale repetition and simulation.
+\item write functions to make your code more re-usable and generally applicable, for yourself and others.
+\end{itemize}
+
+In order to acquire these superpowers, there are three types of topics we will cover:
+\begin{description}
+\item[Core R language:] You will learn the basics of the R language and be able to work with a variety of data types, functions, and computations.
+\item[Tools:] You will learn to use one or more interfaces to R (i.e., ways to run R), you will learn the basics of version control software (\texttt{git}), and you will have an opportunity to learn and practice workflows for data analysis.
+\item[Techniques:] There are lots of ways to do things in R, and you will learn useful tips and best practices for structuring code, documenting code, adapting code, and finding help when you need it.
+\end{description}
+
+In summary, this course will help you approach your work with R more like a programmer, which will enable you to make the most of the superpowers that R provides access to.
+\section*{Structure of class time}
+\label{sec-4}
+
+Each class is 3 hours.  This time will be divided roughly into four parts:
+\begin{enumerate}
+\item \textbf{Review:} We will go over the previous day's homework and answer any outstanding questions.
+\item \textbf{Lecture:} I'll present some concepts, with slides and/or demos.
+\item \textbf{Practice:} You will have some in-class exercises to try, in order to immediately apply the concepts from the lecture.
+\item \textbf{Follow-up and troubleshooting:} Things will inevitably go wrong. You are very unlikely to perfectly apply the concepts the first time during practice, and I will probably forget to mention some things along the way. So we will reserve the last hour to talk about the problems you encounter in practice and solutions to those problems.  If everything goes unexpectedly smoothly, we will use this time to cover more advanced extensions of the concepts.
+\end{enumerate}
+\section*{Schedule}
+\label{sec-5}
+
+The class meetings will only go through the first two weeks of the Winter Term (10 meetings total). The final week of the term will not have any meetings, but you may be working on your final projects (see below) through that time, and you may schedule office hours if you would like some additional feedback or help.
+
+The following schedule is a work in progress.  Check the online version of this syllabus for the most up-to-date schedule, in case you need to miss a class but are interested in specific topics. In particular, the ``special topic'' days may be used as ``spillover'' days if we need to move more slowly or repeat any of the other topics, and if we have time for special topics, those may change based on student interest.
+
+
+\begin{center}
+\begin{tabular}{ll}
+ Date    &  Topic                                                          \\
+\hline
+ Jan 5   &  Getting started; installation; workflow overview               \\
+ Jan 6   &  Basics \#1: objects, functions, packages, and the environment  \\
+ Jan 7   &  Basics \#2: working with different kinds of data               \\
+ Jan 8   &  Basics \#3: working with complex objects and messy data        \\
+ Jan 9   &  Basics \#4: graphics                                           \\
+ Jan 12  &  Iteration \#1: loops and control                               \\
+ Jan 13  &  Iteration \#2: vectorization                                   \\
+ Jan 14  &  Writing functions                                              \\
+ Jan 15  &  Special topic \#1: text, strings, and regular expressions      \\
+ Jan 16  &  Special topic \#2: simulations                                 \\
+\end{tabular}
+\end{center}
+\section*{Grading}
+\label{sec-6}
+\subsection*{Overall}
+\label{sec-6-1}
+
+There are three main components that determine your grade:
+\begin{enumerate}
+\item In-class Practices
+\item Out-of-class Homework
+\item The Final Project
+\end{enumerate}
+
+The grading is based on how much of these components you complete on time:
+\begin{description}
+\item[A] = Completed all components
+\item[B] = Completed two components
+\item[C] = Completed one component
+\item[D] = Did some work but did not complete any components
+\item[F] = Left out one or more components entirely
+\end{description}
+
+What it means to ``complete'' each of these is described below.
+\subsection*{Practices/attendance}
+\label{sec-6-2}
+
+\marginnote{\textbf{Required to "complete":} Seven in-class Practices}As described above, there will be one or more Practice exercises in each class. You will submit these exercises to me electronically during class, as described in class.  In order to be ``complete,'' an individual Practice must represent a full attempt to complete the goal.  That is, you must complete some code or other activity that represents each step in the Practice, as described in the assignment.  This code does not have to actually work!  But if it does not work, you will need to add some documentation of what the problem appears to be.
+
+Requiring Practices is the method I will use to require attendance, since these can only be submitted during class.  There is no separate grade or tracking of attendance.  There is no make-up for a Practice.  The fact that you are only required to complete 7 Practices builds in flexibility if you need to miss one or more classes for any reason. 
+\subsection*{Homework}
+\label{sec-6-3}
+
+\marginnote{\textbf{Required to "complete":} Seven out-of-class Homework}Homework will be assigned with each class.  These will be submitted to me electronically before the next class.  The method of submission will be detailed in the assignment. The assignments will represent some extension or variation on the lesson and Practice of that day.  In order to complete a Homework, you must actually complete the objective for the assignment.  
+
+While the Homework objectives will be the same for all students, the data, and therefore the exact solutions, will be different for each student.  The first assignment is to find a good data set to use throughout the class.  The subsequent assignments will have you explore this data set and practice the things we learn in class.  The purpose of this is to allow and encourage collaboration.  Since everyone's ``answers'' will be slightly different, each student will need to adapt things for their particular data set.  This closely mimics a common way to learn outside of class, namely cribbing off of other people's code, and thus is designed to set you up to continue to learn on your own.
+
+This data set is also intended to be the data used in the Final Project (described below), and thus the Homework assignments may help you biuld towards that project.
+
+Exercises are due before the beginning of the next class period, and this will be enforced strictly. As with Practices, the requirement to correctly complete only 7 Homework assignments builds in flexibility.  But it is highly recommended to try to complete every Homework, since these will help you in your final project. 
+\subsection*{Final Project}
+\label{sec-6-4}
+
+The final part of the course that determines your grade is the Final Project. Here are the requirements and dates:
+
+\begin{description}
+\item[Submit a proposal:] \marginnote{\textbf{Required to pass the course:} Submit proposal by Jan 11}You need to send me a brief written proposal (via email) for your project. This needs to outline how it will address the requirements (data, analysis, etc.). The deadline for this is \textbf{11:59 PM EST, Sunday, January 11}. If you do not send a proposal by this deadline, you will not count as ``completing'' the Final Project.
+\item[Revise proposal:] \marginnote{\textbf{Required to "complete":} Submit revised proposal (due date determined when I send you feedback)}I will look at your proposal and either approve it or send it back to you with suggestions. If I send it back, I may require a revised proposal. I will set the deadline for this revision when I send it back to you, but it will be no later than \textbf{11:59 PM EST, Sunday, January 18}.
+\item[Complete the project:] The project is a set of code completing some kind of analysis. The requirements are:
+\begin{enumerate}
+\item Pick some data to work with
+\item Perform some kind of analysis, which may result in one or more of:
+\begin{enumerate}
+\item Numerical results
+\item A complex object (like a regression analysis)
+\item Graphical results (like a plot)
+\end{enumerate}
+\item Report the analysis with appropriate documentation
+\item Some aspect of the above (data/analysis/reporting) needs to be ``non-trivial,'' i.e., something we have not explicitly covered in class.  Examples include:
+\begin{itemize}
+\item Data: especially messy/big/complex data
+\item Analysis: simulation, non-trivial programming aspect
+\item Results: tricky visualization, novel way of reporting results
+\item Code: providing useful new function that would be of interest to other people
+\end{itemize}
+\item Post results and replicable code via GitHub. This will be described fully in class. The requirement means that your code should compile/run/complete fully. If it does, and it does what you said in your proposal, then the project will be complete.  You will be able to verify that it works ahead of time, so there should be no uncertainty in whether the project ``passes'' or not. The due date\marginnote{\textbf{Required to pass the course:} Post project via GitHub by Jan 22} for the project is \textbf{11:59 PM EST, Thursday, January 22}. Projects posted after this time will not be evaluated.
+\end{enumerate}
+\end{description}
+
+A more complete set of instructions, suggestions, etc. will be made available during the first week of the course.
+\section*{Optional reading}
+\label{sec-7}
+
+All of the course materials will be provided by me, free. However, because R is so popular and widely used, there are many other excellent resources.  Below is a selection of ``most recommended'' things to look at, if you want additional information, or if you need a good reference book.
+\subsection*{Official R docs and manuals}
+\label{sec-7-1}
+
+\begin{enumerate}
+\item See here: \href{http://cran.r-project.org/manuals.html}{http://cran.r-project.org/manuals.html}
+\end{enumerate}
+\subsection*{Recommended general-purpose books}
+\label{sec-7-2}
+
+\begin{enumerate}
+\item \emph{R in Action} (Kabacoff): ``practical'' intro with some more advanced topics, including examples of some common stats analysis
+\item \emph{R in a Nutshell} (Adler): a good overall reference book
+\item \emph{R Cookbook} (Teetor): another general reference, with a lot of ``recipes'' for doing different things
+\item \emph{The Art of R Programming} (Matloff): a very readable, insightful book from a more programming perspective, good for getting a better handle on the ``guts'' of R
+\item \emph{Software for Data Analysis} (Chambers): big treatise on How R Works, from both a conceptual and technical level. Good for really deepening your understanding of programming for data analysis.
+\item \emph{The R Inferno} (Burns): a tongue-in-cheek look at some of the traps and pitfalls of working with R (and how to avoid them).
+\end{enumerate}
+\subsection*{More specialized stats books}
+\label{sec-7-3}
+
+\begin{enumerate}
+\item \emph{Discovering Statistics with R} (Field): nice general-purpose stats reference, written in a very light-hearted style, with tons of R examples.
+\item \emph{An R Companion to Applied Regression} (Fox): excellent textbook on regression, with lots of useful R code, and an accompanying package (\texttt{car}) with lots of useful functions.
+\item \emph{Data Analysis Using Regression and Multilevel/Hierarchical Models} (Gelman \& Hill): should be required reading if you are interested in using mixed-effects models (aka multilevel/hierarchical models).
+\item \emph{Doing Bayesian Data Analysis} (Kruschke): very accessible intro to Bayesian analysis, with tons of R code.
+\item \emph{Elements of Statistical Learning} (Hastie, Tibshirani, Friedman): a seminal text on the topic, with R code from the experts.
+\item \emph{Regression Modeling Strategies} (Harris): a good book for digging deeper into regression models. Harris's \texttt{rms} and \texttt{Hmisc} packages are also very widely used.
+\end{enumerate}
+\subsection*{Handy websites}
+\label{sec-7-4}
+
+\begin{enumerate}
+\item Quick-R: a lot of good tips and quick reference, by the author of \emph{R in Action} (Kabacoff).
+\item Cookbook for R: lots of handy stuff.
+\item R Task Views: a great way to find useful packages.
+\item StackOverflow: a great source for asking questions and getting answers.  Google searches on error messages often lead here.
+\item ``The Google'': when in doubt\ldots{}
+\end{enumerate}
+\section*{Policies and other info}
+\label{sec-8}
+\subsection*{Honor Code}
+\label{sec-8-1}
+
+You will be expected to abide by the honor code. The exercises are be designed such that comparing notes with other students is allowed and even encouraged.  However, you still need to do your own work.  For any assignment you submit, you will be held to the honor code. If you have any questions at all, please ask me before it becomes a problem.
+\subsection*{Accommodations}
+\label{sec-8-2}
+
+Please let me know about any requested accommodations due to disabilities as soon as possible, and we will come up with a plan.
+
+\end{document}

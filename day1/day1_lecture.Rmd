@@ -1,0 +1,445 @@
+---
+title: "R Programming for Behavioral Science: Day 1"
+author: "PSYC 798W, Scott Jackson"
+date: 2015-01-05
+output: ioslides_presentation
+---
+
+# Outline
+
+## What are we doing today?
+  1. Introduce each other
+  2. Introduce R and some reasons why the course is focused on *programming*
+  3. Discuss the course goals and structure
+  4. Discuss what programming is like
+  5. Introduce the basic software toolbox
+  6. Get things installed
+  7. Discuss next steps
+
+# Intro
+
+## Introductions
+You!
+
+  - pair up with the person next to you
+  - ask them:
+    1. Their name
+    2. Their major
+    3. One interesting piece of trivia
+    4. What they're hoping to get out of the course
+  - take notes (seriously!)
+  - report to the class (and listen to each other)
+
+## Introductions {.smaller}
+Me:
+
+  - Associate Research Scientist at Center for Advanced Study of Language
+  - PhD in Linguistics (psycholing, theoretical ling, prosody)
+  - Light on formal training in stats/programming
+    - "stats for linguists" course (ANOVA)
+    - "programming for linguists" course (Perl)
+  - Heavy on self-teaching
+    - 7+ years using R
+    - more advanced stats (mixed-effects models, Bayesian modeling, etc.)
+    - LaTeX, Emacs, org-mode, etc.
+  - Current work heavy on data analysis & visualization
+  - Applied work with real-world implications (aptitude testing)
+  - Learned "the hard way", hoping to help smooth the learning curve for you
+
+## What is R?
+  - programming language
+  - statistical software package
+  - platform for data analysis
+    - stats
+    - graphics
+    - interface with other languages (FORTRAN, C, etc.)
+  - ecosystem
+    - packages (6164 on [CRAN](http://cran.r-project.org/web/packages/) and counting!)
+    - user community
+
+## Why *programming*?
+Programming gives you *superpowers*:
+
+   - ability to do completely new things
+   - ability to replicate your work
+   - ability to re-use code and get more done
+
+https://www.youtube.com/watch?v=nKIu9yen5nc
+
+We will be learning to *program* in R
+
+## What does it mean to "program in R"?
+   - R commands are code
+   - No *technical* distinction between "user" and "programmer"
+   - Approaching R like a "free, command line alternative to SPSS" is limiting, frustrating
+   - Learning to think about R like a programmer is liberating, empowering
+   - Good code is re-usable, expandable
+
+## Developing useful code
+   - Start with limited-case code
+     - specific analyses
+     - isolated scripts
+   - Develop more general-use code
+     - functions
+     - packages
+   - Develop *new* things
+     - make life easier
+     - make life more interesting
+
+## The R Programming Proficiency Scale | (made up completely, with apologies to the [ILR scale](http://www.govtilr.org/Skills/ILRscale1.htm) of language proficiency)
+
+1: Cookbook
+
+2: Basic console $\leftarrow$ where many people stop
+
+3: Scripts (and/or notebooks)
+
+4: Writing functions $\leftarrow$ we will get at least to here
+
+4+: Creating and extending classes
+
+5: Writing packages
+
+# Course goals and structure
+
+## General course approach
+   - emphasis on practical use and benefits
+   - skill-building, not "knowledge transfer"
+   - iterative, cumulative
+   - interactive, flexible $\rightarrow$ not set in stone!
+   - end-goal: produce something useful/interesting for YOU
+   
+## Intended course pace
+  - start at the VERY bottom
+  - chance to revise your assumptions
+  - move VERY quickly
+    - more opportunities to practice
+    - solidify understanding over the course
+  - YOU control
+    - ask questions
+    - ask for additional stuff
+    - ask for review
+
+## Class session structure
+Typical class split into four parts:
+
+1. Review: go over previous homework, answer outstanding questions
+2. Lecture: me talking, you interrupting (often, I hope!) to ask questions, building on the previous day's reading
+3. Practice: you trying something based on the lecture/readings
+3. Follow-up (and expand): discuss what broke during the Practice, go deeper (if time allows)
+
+## Assessment structure
+  - Three major components:
+    1. In-class Practices
+    2. Homework
+    3. Final project
+  - Grading scheme:
+    - A = Completed all components
+    - B = Completed two components
+    - C = Completed one component
+    - D = Did some work but did not complete any components
+    - F = Left out one or more components entirely
+    
+## Completing Practice
+  - the Practice component is "complete" if you complete 7/10 IN-CLASS Practices
+  - de facto attendance
+  - some Practice will require code submission
+  - code submissions will only count if submitted during class
+  - not graded for "correctness", only completion
+  - should be automatic if you come to class
+  - no "excused absences", thus the 7/10 leeway
+  - HIGHLY extenuating circumstances can be discussed with me, and will require hospital notes, etc.
+    
+## Completing Homework {.smaller}
+  - the Homework component is "complete" if you complete 7/10 assignments
+  - code submissions due by 9am sharp the next class day after Homework is assigned
+  - code submissions will be either by email or by pushing to a repository
+    - described and specified for each assignment, not by choice/convenience
+  - time stamps on email/pushed changes will determine if it's on time
+  - Homework is "graded"
+    - assignment considered complete only if:
+      - the objective is completed
+      AND
+      - the results can be replicated by the instructor
+    - Homework code will be commented and given feedback by instructor
+    
+## Completing the Final Project {.smaller}
+  - the Final Project has several requirements:
+    - proposal due 11:59 PM EST, Sunday, January 11
+    - proposal revision (if needed) due by time specified by instructor, but no later than 11:59 PM EST, Sunday January 18
+    - final code due 11:59 PM EST, Wednesday, January 21
+    - interesting data set (see requirements for first Homework)
+    - analysis results in one or more of:
+      - numerical results
+      - complex object (like a regression)
+      - graphical results (e.g., plots)
+    - analysis reported and described with thorough documentation of each step
+      - should enable someone to replicate analysis, even without code
+    - some "non-trivial" element not explicitly covered in class
+    
+## Completing the Final Project
+  - "Non-trivial" elements could include:
+    - Data: especially mess/big/complex data
+    - Analysis: significant programming aspect to analysis (e.g., simulation)
+    - Results: tricky visualization, novel way of reporting results
+    - Code: useful new functions that would be of use and interest to other people
+  - code will be posted to GitHub (or other agreed-on repository)
+    - code will acccomplish what is in the proposal
+    - code will enable the instructor to completely replicate the results
+    
+
+# Some programming basics
+
+## Basic GUI workflow
+   1. Open a file with a program (Excel, SPSS, Word, etc.)
+   2. Execute commands by clicking on things, typing
+   3. Save results/output by modifying file(s)
+
+## Basic R workflow {.smaller}
+   1. *Start R*
+      - different interfaces available to run R
+   2. *Read in data*
+      - "read data", not "open files"
+   3. *Write & run R code to interact with data*
+      - Iterative process
+      - Simple or complex
+   4. *Get output*
+      - Results in console
+      - Graphics
+      - Writing results to a (simple) file
+      - Fully-reproducible papers/slides/blogs/whatever
+      
+## Programming/analysis workflow
+   1. Set goals/questions
+   2. Start R
+   3. Assemble stuff you need: files, data, etc.
+   4. Read/format/munge data
+   5. Try something
+   6. Figure out what went wrong
+   7. Try something else
+   8. Repeat steps 3 through 7 in some order...
+
+## Programming/analysis workflow
+[Move fast and break things](http://xkcd.com/1428/)
+
+Things to strive for:
+
+  - experimental approach
+  - quick iteration cycle
+  - learn from mistakes
+
+## Programming habits to build
+  - write code incrementally
+    - start small
+  - test often
+  - expect bugs (expect things to break)
+  - debugging = puzzle-solving
+  - copy, steal, and cheat
+    - copy other people's code and methods
+    - steal ideas and implementations and useful code (with attribution!)
+    - find useful ways to "cheat"" and create shortcuts for yourself
+
+# The Toolbox
+
+## Toolbox Overview
+  - R is most effective when integrating other tools
+  - Three essentials:
+    - Run code: the base R program to interpret and run code
+    - Edit code efficiently: a good editor or *interface* to R
+    - Track your edits: effective use of version control software
+
+## Running R
+  - Programming languages need an interpreter/compiler to run human-readable code
+  - In some languages, programs are built, then compiled/interpreted/executed
+  - R is designed to be *interactive*
+    - immediate execution of commands
+    - iterative approach
+    - extremely useful for data analysis
+  - The R *language* is interpreted and executed by the open  -source R *software*
+  - Some other versions exist ([Revolution R](http://www.revolutionanalytics.com/), [pqR](http://www.pqr-project.org/), [Renjin](http://www.renjin.org/), etc.)
+  - We will stick with "regular" R, aka GNU R
+
+## Interfaces
+   - Bare bones: the R console
+   - Better: a functional script editor (e.g., `Rgui.exe`)
+   - Best: a fully-integrated text editor
+     - syntax highlighting
+     - supports interaction with active console
+     - good editing features
+     - other bells & whistles
+     
+## Two excellent interfaces
+[RStudio](http://www.rstudio.com/): the best dedicated R editor
+
+  - Pros:
+    - free & open source
+    - fairly flexible (can support different workstyles)
+    - supports reproducibility through integration with `knitr` and version control (`git` and `SVN`)
+    - several R-specific conveniences
+    - easy to use
+    - RStudio team includes several R "luminaries"
+  - Cons:
+    - not great as a general-purpose editor
+
+## Two excellent interfaces
+[Emacs](http://www.gnu.org/software/emacs/): one of the best text editors of all time
+
+  - Pros:
+    - free & open source
+    - integrates very well with R using the ESS package
+    - infinitely flexible
+    - works well for virtually *any* kind of text/code editing
+    - many "killer" features work even better than in RStudio
+    - you can do pretty much [anything](http://xkcd.com/378/) in Emacs
+  - Cons:
+    - learning curve
+    - nerd jokes
+       
+## RStudio demo
+
+## Emacs demo
+
+## Version control
+What is version control software?
+
+- Tracks changes in code and other files
+- Provides a "universal 'back' button" for entire projects
+- Helps with collaboration on complex projects
+- Promotes good habits
+- Can quickly save you immense amounts of pain & suffering
+
+## Introducing `git`
+- Different version control software (VCS) packages exist
+- We will use the `git` VCS:
+  - extremely powerful (you will never "outgrow" it)
+  - relatively low overhead -- can be useful with some very simple commands 
+  - integrates nicely with both RStudio and Emacs
+  - cross-platform, free, and open-source
+  - opens up additional world of R packages and development on GitHub
+
+# Installation
+
+## Installing R
+  - Go to http://www.r-project.org/
+  - Follow the CRAN link
+  - Select a mirror (hosting site)
+  - Follow the links and instructions for your OS
+  - GO!
+
+## Installing RStudio
+  - Go to http://www.rstudio.com/
+  - Download the free "desktop" version for your OS
+  - GO!
+
+## Installing Emacs + ESS
+  - Linux: use your package manager to download
+    - e.g. `sudo apt-get install emacs24`
+  - Windows/Mac (easy version):
+    - Go straight to Vincent Goulet's site http://vgoulet.act.ulaval.ca/en/emacs/
+    - Download for your OS
+    - Comes with ESS and some other handy things
+    - See me for details on how to get started
+
+## Installing git
+  - Go to http://git-scm.com/
+  - Click the download button
+  - Follow installation instructions
+    - For Windows especially, follow "recommendations", e.g. installing the Git Bash
+    
+## GitHub {.smaller}
+  - [GitHub](https://github.com/) is a hosting site for code (and other projects)
+  - Using `git` does not require GitHub (or any other hosting site) -- it can be used completely "locally"
+  - GitHub adds some convenient wrappers and interfaces, especially for collaboration
+  - GitHub is a popular place for many R developers to post code, packages, etc.
+  - GitHub accounts are free for "public" repos
+  - If you want private repos, you can pay a small fee
+  - We will use GitHub to facilitate commenting on homework
+    - You will post your homework to your own GitHub repo
+    - I will "fork" the repo, make comments/changes, and then submit a "pull request", which you will be able to see, comment on, and incorporate into your code
+  - BitBucket is another option
+  
+## Signing up on GitHub
+  - Go to https://github.com/
+  - Follow the instructions to sign up
+  
+## Testing and troubleshooting
+  - Open RStudio
+  - Type something in the console, like
+  
+```{r}
+2 + 2
+```
+
+  - New Project...
+  - Version Control
+  - Git
+  - https://github.com/shoestringpsycholing/r_programming_bsos.git
+
+# Next steps
+
+## Practices and Homework
+  - Practices:
+    - in-class
+    - structured
+    - everyone does the same thing
+    - reviewed and discussed immediately
+  - Homework:
+    - extension of Practice/Lectures/Readings
+    - on your OWN data
+    - everyone does something slightly different
+    - evaluated based on whether you completed the task for your data
+    - collaboration and "cheating/stealing" encouraged!
+
+## Homework and final project
+  - Your final project will be a full-blown reproducible report of an interesting analysis on some data of your choosing.
+  - It will represent a cumulative application of what we cover in the course.
+  - You will extend it in some way that is not covered directly in class.
+  - The homework assignments are designed to help you build towards this goal.
+
+## Today's homework
+  1. Finish with any installation/sign-up steps that you did not complete already
+  2. (optional) Run through the installation process again
+    - getting a friend set up
+    - installing on another computer (e.g., desktop)
+    - re-installing on your computer
+  3. (required) Find a data set!
+  
+## Finding a data set {.smaller}
+  - Take some time to find a good data set
+  - For use throughout the rest of the course & the final project
+  - Requirements:
+    - multivariate (i.e., a bunch of records/rows, each with multiple variables/columns)
+    - mix of data types (two or more of the following):
+      - continuous or semi-continuous numbers
+      - categorical factors or groupings
+      - string/text data
+      - dates or timestamps
+    - interesting enough to keep you asking questions!
+  - Changing data sets later is okay, but highly dispreferred 
+  - (see the first bullet!)
+
+## Some places to look
+  - Your own work!
+  - [Google](http://lmgtfy.com/?q=public+data+sets) 
+  - R has lots of built-in data sets (also available in many packages)
+  - You can see all the available data sets in R by typing the command:
+
+```{r}
+data()
+```
+
+  - If one of the R data sets catches your eye, talk to me if you need some basic commands to take a peek at it.
+
+## Send it to me {.smaller}
+  - Email me the data set
+  - If it's really large, send me a link
+  - Email me:
+    - List of variables you're interested in, with column names, plain English descriptions, and the TYPE of data in each variable (number, factor, text, time)
+    - ONE sentence describing why this data is interesting to you
+    - THREE initial questions you think you could ask and (at least partially) address with this data. Try to make the questions as SIMPLE as possible!
+  - I will reply with comments, and suggestions for changes if needed.
+  - This is the ONE assignment you can "re-do" later for credit, if I ask you to do something different.
+  - BEFORE 9am 1/6/2014 (I will check email timestamps)
+  - Even if you're not 100% decided, send me the above info for some possibility, by 9am, to receive credit
+
+# FIN (questions?)
