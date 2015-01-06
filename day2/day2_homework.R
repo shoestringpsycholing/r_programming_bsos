@@ -41,7 +41,7 @@
 
 
 # 9. Create a new data.frame with just that subset of columns
-#    from #7
+#    from #8
 #    - do this in at least TWO different ways
 
 
@@ -62,7 +62,7 @@
 #     - if one is NOT possible, say why you can't do it
 
 
-# 13. Repeat #10 for TWO more comparisons
+# 13. Repeat #12 for TWO more comparisons
 #     - ALTERNATIVELY, if correlations are more interesting,
 #       do those instead of t-tests (and try both Spearman and
 #       Pearson correlations)
