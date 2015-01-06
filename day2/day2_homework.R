@@ -2,7 +2,21 @@
 # Use comments where you're having trouble or questions
 
 # 1. Read your data set into R
+# use read.csv()  (read.delim() for tab-delimited)
+# 1. Open in Excel
+# 2. Save as... CSV
 
+# mydata <- read.csv("filename.csv")
+# mydata <- read.delim("filename.txt")
+# all wrappers for read.table
+?read.table
+# sep = ","  == CSV
+# sep = "\t"  == tab-delim
+# header = TRUE
+
+# SPSS
+# library(foreign)
+# read.spss()
 
 # 2. Peek at the top few rows
 
