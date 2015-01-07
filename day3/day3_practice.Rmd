@@ -1,0 +1,25 @@
+---
+title: "Day 3 Practice"
+output: html_document
+---
+
+1. Make a copy of the `iris` data set in your workspace (i.e., assign the value of `iris` to a new name).
+
+2. Reshape the data frame into "long" format.  
+  - Can you still tell which measurements came from which plants?  If not, can you do something about that?
+  - Are there better names for the `variable` and `value` columns?  Change them!
+
+3. Create new columns that represent the part of the plant being measured (sepal, petal) and the dimension being measured (length, width).
+  - Check to make sure it worked!
+
+4. Create a data frame that leaves out the Sepal measurements
+
+5. Using the full data set, transform the measurement variable in some way
+  - Create a new column to do it
+  
+6. Reshape the data so that there are two measurement columns, one for all Lengths and one for all Widths.
+
+7. Using `dcast`, make a new data frame that aggregates over the flower parts (use mean or sum), but keeps the individual plants separate.
+
+8. Using `dcast`, make a new data frame that aggregates over flower parts and individual plants, getting "cell means" for species and dimension.
+

@@ -18,6 +18,8 @@
 # library(foreign)
 # read.spss()
 
+minpair <- read.csv("scottdata/CognitionPaperFinalData.csv")
+
 # 2. Peek at the top few rows
 
 

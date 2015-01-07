@@ -1,0 +1,44 @@
+---
+title: "Day 3 Lecture"
+output: html_document
+---
+
+# Some follow-up notes
+
+## `<-` vs. `=`
+
+# Notebooks vs. scripts
+
+# Reading and writing data/files
+     
+# Data types
+   - numeric
+   - character
+   - factor
+   - logical
+   - NA
+   - NULL
+   - others (e.g, "Date")
+   
+# More subsetting
+
+# Data manipulation
+
+## Combining data frame objects
+  - rbind, cbind
+  - merge
+  
+## Creating new columns
+
+## Transforming columns
+
+## Dealing with factors
+  - levels
+  - recoding
+  - reordering
+  - droplevels
+  - as.numeric vs. as.character
+  - stringsAsFactors
+
+## Reshaping data
+
