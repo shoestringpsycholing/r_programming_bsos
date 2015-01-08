@@ -1,0 +1,43 @@
+---
+title: "Day 4 Practice"
+output: html_document
+---
+
+1. Read in the data base of phoneme pairs from Wedel, Kaplan, and Jackson (2013).  The relative path from the working directory of this project is: "scottdata/CognitionPaperModifiedData.csv"
+
+2. Read in the data using the WRONG function.  What does it look like?
+
+3. Change some (or all) of the column names.  Provide a table that links original column names with the current/new column names.
+
+4. Locate NAs.  Remove all rows containing NAs.
+
+5. Recode the "Corpus" variable in the following way:
+Am = American
+Du = Dutch
+Fr = French
+Ge = German
+HK = Cantonese
+Ko = Korean
+RP = British
+Sl = Slovakian
+Sp = Spanish
+
+6. Run a logistic regression, using `glm()`, where "Merged" status is the (binary) dependent variable, and "WithinMinPairs" is the predictor.
+  - Hint #1: the basic usage of `glm()` is:
+```{r eval=FALSE}
+results <- glm(DV ~ predictor1 + predictor2 + ...  , 
+               data = dataframe.object,
+               family = "binomial")
+```
+  - Hint #2: you need the DV to be 0s and 1s, not a factor.
+  
+7. Use `summary()` to display the results.
+
+8. Using INLINE code, report the estimate, standard error, and p-value for the WithinMinPairs coefficient.  This will look something like:
+
+The estimate for the WithinMinPairs coefficient was `r `, with a standard error of `r ` and a p of `r `.
+
+EXTRA CREDIT: figure out how to display the above results with only a few decimal places
+
+HINT: use `str()` to figure out how to extract these values.
+

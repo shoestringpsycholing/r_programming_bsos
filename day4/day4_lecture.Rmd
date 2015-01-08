@@ -1,0 +1,63 @@
+---
+title: "Day 4 Lecture"
+output: html_document
+---
+
+# Data manipulation
+  1. Simple column transformations
+  2. Dealing with factors
+  3. Reshaping data
+  4. Aggregation
+
+## Simple column transformations
+
+## Dealing with factors
+  - levels
+  - recoding
+  - reordering
+  - droplevels
+  - as.numeric vs. as.character
+  - stringsAsFactors
+
+## Reshaping data
+
+## Aggregation (with the `reshape2` package)
+
+# Data cleaning
+
+## A template for data cleaning
+  1. Get the data to read in to R
+  2. Fix column names
+  3. Check all columns to make sure data is getting read in correctly
+  4. Check NAs, decide what to do with them
+  5. Remove excessive rows or other "defective" rows
+  6. Re-code factors as needed
+  
+### Reading data
+  - find a good `read.X()` function, where X = your type of data
+    - `read.table()` is the basic one
+    - `read.csv()` and `read.delim()` are convenience "wrappers" for `read.table()`, for CSV and tab-delimited files, respectively
+    - `read.spss()` and `read.dta()` from the `foreign` package for SPSS and Stata files
+  - for messier or more primitive kinds of files in weird formats, use `readLines()`, or `scan()` to pull in the data in a very raw format, which you will then need to format in R
+
+### Fix column names
+
+```{r}
+mysleep <- sleep
+colnames(mysleep)
+```
+
+### Check all columns
+
+### Check NAs
+
+### Remove rows/columns as needed
+
+### Re-code factors as needed
+
+# Complex objects
+
+## Looking at the structure of objects
+
+## Extracting bits and pieces
+
