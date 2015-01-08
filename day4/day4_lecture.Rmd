@@ -140,7 +140,6 @@ aggregateff <- dcast(myff.melt, treatment ~ taste,
 aggregateff
 ```
 
-
 # Data cleaning
 
 ## A template for data cleaning
@@ -162,18 +161,43 @@ aggregateff
 
 ```{r}
 mysleep <- sleep
-colnames(mysleep)
+oldnames <- colnames(mysleep)
+mycolnames <- c("extraSleep", "experimentalGroup", "subjectID")
+colnames(mysleep) <- mycolnames
+data.frame(oldnames, mycolnames)
+
 ```
 
 ### Check all columns
 
 ### Check NAs
+  - use summary()
 
 ### Remove rows/columns as needed
 
 ### Re-code factors as needed
 
 # Complex objects
+
+```{r}
+myff <- french_fries
+results <- lm(potato ~ treatment, data = myff)
+results
+summary(results)
+plot(results)
+class(results)
+names(results)
+plot(results$residuals)
+results.summary <- summary(results)
+names(results.summary)
+results.summary$coefficients
+str(results)
+class(results.summary$coefficients)
+
+str(summary(results))
+?lm
+```
+
 
 ## Looking at the structure of objects
 

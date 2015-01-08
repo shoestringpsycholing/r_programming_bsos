@@ -12,22 +12,74 @@ myris <- iris
 head(iris)
 ```
 
-
 2. Reshape the data frame into "long" format.  
   - Can you still tell which measurements came from which plants?  If not, can you do something about that?
   - Are there better names for the `variable` and `value` columns?  Change them!
 
+```{r}
+myris$PlantID <- 1:nrow(myris)
+myris$PlantID <- paste("plant", 1:nrow(myris), "ID", sep = "_")   # better!
+head(myris)
+myris.melt <- melt(myris, id.vars = c("PlantID", "Species"), 
+                   value.name = "cm", variable.name = "measurement.type")
+```
+
 3. Create new columns that represent the part of the plant being measured (sepal, petal) and the dimension being measured (length, width).
   - Check to make sure it worked!
+  
+```{r}
+# one way of doing it
+myris.melt$Dimension <- "Width"
+myris.melt$Dimension[myris.melt$measurement.type %in% c("Sepal.Length", "Petal.Length")] <- "Length"
+xtabs(~ Dimension + measurement.type, data = myris.melt)
+
+myris.melt$PlantPart <- "Petal"
+myris.melt$PlantPart[myris.melt$measurement.type %in% c("Sepal.Length", "Sepal.Width")] <- "Sepal"
+xtabs(~ Dimension + PlantPart + measurement.type, myris.melt)
+
+# a better way: colsplit function from reshape2
+myris.melt2 <- cbind(myris.melt, 
+                     colsplit(myris.melt$measurement.type, pattern = "\\.", 
+                              names = c("PlantPart", "Dimension")))
+head(myris.melt2)
+```
 
 4. Create a data frame that leaves out the Sepal measurements
 
+```{r}
+myris.petals <- droplevels(myris.melt[myris.melt$PlantPart == "Petal", ])
+summary(myris.petals)
+```
+
 5. Using the full data set, transform the measurement variable in some way
   - Create a new column to do it
-  
+
+```{r}
+myris.melt$logcm <- log(myris.melt$cm)
+summary(myris.melt)
+```
+
 6. Reshape the data so that there are two measurement columns, one for all Lengths and one for all Widths.
+
+```{r}
+myris.cast1 <- dcast(myris.melt, PlantID + Species + PlantPart ~ Dimension, value.var = "cm")
+head(myris.cast1)
+```
 
 7. Using `dcast`, make a new data frame that aggregates over the flower parts (use mean or sum), but keeps the individual plants separate.
 
+```{r}
+myris.agg1 <- dcast(myris.melt, PlantID + Species ~ Dimension, value.var = "cm", fun.aggregate = mean)
+head(myris.agg1)
+myris.agg1 <- dcast(myris.melt, PlantID + Species + Dimension ~ ., value.var = "cm", fun.aggregate = mean)
+head(myris.agg1)
+```
+
 8. Using `dcast`, make a new data frame that aggregates over flower parts and individual plants, getting "cell means" for species and dimension.
 
+```{r}
+myris.agg2 <- dcast(myris.melt, Species ~ Dimension, value.var = "cm", fun.aggregate = mean)
+myris.agg2
+myris.agg2 <- dcast(myris.melt, Species + Dimension ~ ., value.var = "cm", fun.aggregate = mean)
+myris.agg2
+```
