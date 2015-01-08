@@ -55,17 +55,98 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 
 
+<div id="pulling-from-the-repo" class="section level1">
+<h1>Pulling from the repo</h1>
+<p>First time: <code>git clone https://github.com/shoestringpsycholing/r_programming_bsos.git</code></p>
+<p>After that: <code>git pull origin master</code></p>
+</div>
 <div id="some-follow-up-notes" class="section level1">
 <h1>Some follow-up notes</h1>
 <div id="vs." class="section level2">
 <h2><code>&lt;-</code> vs. <code>=</code></h2>
+<p>Both work! Not equivalent!</p>
+<ul>
+<li>the arrow (<code>&lt;-</code>) is “more idiomatic” for R</li>
+<li>the single equals (<code>=</code>) is more common in other languages</li>
+<li>the arrow <strong>always</strong> means “assignment”</li>
+<li>the single equals does not mean assignment in some places (e.g., inside a function call)</li>
+<li>arguments for arrow:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Visually distinctive</li>
+<li>Always unambiguously means “assignment”</li>
+</ol>
+<ul>
+<li>arguments for single equals:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Less typing</li>
+<li>Common in many other programming languages</li>
+</ol>
+<ul>
+<li><em>Final recommendation</em>: if you have a strong preference, just use that, if not, use arrow</li>
+</ul>
 </div>
 </div>
 <div id="notebooks-vs.scripts" class="section level1">
 <h1>Notebooks vs. scripts</h1>
+<p>Sweave: the original “reproducible document”, mix of LaTeX and R</p>
+<p>R Markdown: one of the “cutting edge” formats, especially well-integrated into RStudio, that allows mixing of R code with text, document formatting, links, graphics, etc.</p>
+<p>The following is a code chunk, and when <code>knitr()</code> is run on this document, it will display both the code and the output.</p>
+<pre class="r"><code>x &lt;- rnorm(10000)
+hist(x)  # this is a histogram</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAAZlBMVEX9/v0AAAAAADkAAGUAOTkAOWUAOY8AZo8AZrU5AAA5OQA5OTk5j9plAABlOQBlOY9lZgBltf2POQCPjzmPtY+P29qP2/21ZgC124+1/v3ajzna24/a/v39tWX924/9/rX9/tr9/v2hEMr8AAAAInRSTlP///////////////////////////////////////////8ADdDDcQAAAAlwSFlzAAAdhwAAHYcBj+XxZQAAIABJREFUeJzt3e1i29a2ntGjpE3t1mlrt40aNXLs+7/JkqI+QJGyzbkEvpjAGH9O4uMpitHCs0ECXPqP7wCU/Ef6GwDoSkABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQBn09ePNzc1vf53793//PP5/nXX/adZv7z3c3Tz4nP4+WBwBZdBYQHd/e+kBfXhCe3/8k/5WWBoBZdBIQL992f2FhQf04Uk8+JD+VlgcAWXQSEBvb5Yf0Punfi79GyVAQBn0g4D+VIeAPrwB+ovPh60RUAZtIqDe/uQsAWWQgLJdAsqgX34P9Olq9u9/H/795c3FlzuEHq4qvfyVo8lPj//wcC3n7vAnd5MC371+q/L28dHvJg/x/KXOe/340+9xeg3pcGXp8andeYd0swSUQb8Y0OebgZ77dBrQyd+ZfMHny+C//fU6oLcv03eTr/bYskNAn/8fu7PIyZd686kc/YW3Avr4/3g4MT1MOUfdJAFl0K8FdNrPx4KeBHTawJczupfbiG5++9/HAf1vL1/t3OxDQP/ry5/+8f9evolX57jf33j8NwN6ePdh/5cOJ62uMm2TgDLolwL6+NL4KEavA3p//FceK/h6chrQl7943OfHPN6+njz96lPnHv/tgB6+r90D3b/x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dJHSB7D57Dxlswd0euX93o70y5Q+gM1n5ymbM6B7n16qud+i3o70M8lexTXfe56yuQP64CGbD5/oPP1Nxz9iXfyi0XymD2Dz2XnKZgvo90lDHwJ6d3E/rYtflT4Azfeep2zOgB58/fh0Of7iPemti1+UPgDN956nbP6ADrAuflH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HzvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mArkH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HzvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mArkH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HxmDchKAAALFElEQVTvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mArkH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HzvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mArkH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HzvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mArkH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HzvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mArkH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HzvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mArkH6ADTfe54yAV2D9AFovvc8ZQK6BukD0HzvecoEdA3SB6D53vOUCegapA9A873nKRPQNUgfgOZ7z1MmoGuQPgDN956nTEDXIH0Amu89T5mALsPNoNFHN7/lecoEdAlG85k+AM33nqdMQJcgfQCZ3/Y8ZQK6BOkDyPy25ykT0CVIH0Dmtz1PmYAuQfoAMr/tecoEdAnSB5D5bc9TJqBLkD6AzG97njIBXYL0AWS++/yoscffMAFdgvwBaL73vICGCOgS5A9A8+YpENAlSB8A5s1TIqBLkD4AzJunRECXIH0AmDdPiYAuQfoAMG+eEgFdgvQBYN48JQK6BOkDwLx5SgR0CdIHgHnzlAjoEqQPAPPmKRHQJUgfAObNUyKgS5A+AMybp0RAlyB9AJg3T4mALkH6ADBvnhIBXYL0AWDePCUCugTpA8C8eUoEdAnSB4B585QI6BKkDwDz5ikR0CVIHwDmzVMioEuQPgDMm6dEQJcgfQCYN0+JgC5B+gAwb54SAV2C9AFg3jwlAroE6QPAvHlKBHQJ0geAefOUCOgSpA8A8+YpEdAlSB8A5s1TIqBLkD4AzJunRECXIH0AmDdPiYAuQfoAMG+eEgFdgvQBYN48JQK6BOkDwLx5SgR0CdIHgHnzlAjo+7gZNPro5s3n5jdMQN/DaD7TB4B585QI6HtIL2Dz5sfmsycAjQnoe8gfAObNj8wLaJGAvof8AWDefN/5xgT0PaQXoHnznecbmzugt88n+R8uH27zc0kvQPPmO883NmtA7169UXJpQ9v8XNIL0Lz5zvONzRjQrx9P3mr+/e+LvkKbn0t6AZo3n50fNfb4QfMF9NuX42L+++fu3//455IvccX/rtkFYN587/ns8RM0X0DvT3K5T+rnS77E1f67pheAefPmW5ovoLenL9h3J6EXvQ16xYCaN2++63zQbAHdnW5+OvnDu8tewwuoefPml2y2gO7ONk9frt//6DLSyCvjsdffQGuVRL0LAQW6qyTqXSz6JTzAki36IhLAkl37NqbTs1KApq58I/2FH0UCWLAZP8r5UMxjv/0138MBXNmsm4ncvuqnN0CBNVn0dnYASzZ3QAFWS0ABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABitYS0Pf53X5AR7HwrCOg6R8fkBRLz1oCmv4Osjz/9HeQ5fnHHlpA18DzT38HWZ5/7KEFdA08//R3kOX5xx5aQNfA809/B1mef+yhBXQNPP/0d5Dl+cceWkDXwPNPfwdZnn/soQV0DTz/9HeQ5fnHHlpA18DzT38HWZ5/7KEFdA08//R3kOX5xx5aQNfA809/B1mef+yhBXQNPP/0d5Dl+cceWkDXwPNPfwdZnn/soQV0DTz/9HeQ5fnHHlpA18DzT38HWZ5/7KEFdA08//R3kOX5xx5aQNfA809/B1mef+yhBXQNPP/0d5Dl+cceWkDXwPNPfwdZnn/soQV0DTz/9HeQ5fnHHnodAQUIEFCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKFpVQL9+vPmc/h5Cdk9957e/0t9HwL9/7p/6p/S3EbPhH/2L2KG/poDuj6RtBvTQkL3f/05/L9d2+/jMN1qQLf/oX+QO/TUFdH8obTKgLwfR9g6ju80+8wdb/tFP5A79FQX0/marAb17egm7X0cf0t/NVe1fv/7xz+GHv61nfrDhH/1E8NBfT0AP/1u8xYBOXr/cbe085PYpG7uSbvBF/JZ/9C+Sh/5qAvrty83v/2ubAb1/OffY/VfY1H+C3aHzVI27LV5I2vCP/kX00F9NQHfHz+e7bS6haTput/WfYHfe+eHlH/ev5bdlwz/6F9FDfy0B3R0+n75vNKBTt9t6ITsJyP48ZKMvYQ829qN/lj30VxLQ3dGzO/0Q0N1L2k2dhk1+4rslsM2APNraj/5J+NBfSUAP/+sroFt7I3D6snWrZ2CPtvajfxI+9NcR0PvD4tl8QDf3PuA0mtsO6OZ+9I/Sh/4qAvr06mXrAd0dRBt7G/A4oBv+6W/vR38QP/RXEdDbx8Wz8YDeb+9OQGegBxv80R/ED/2uAX3+CNvuoHn+j7ehgE6f/6MtHkQC+mCLP/oH+UN/BQF9uRdw0wG9vdngm2Cuwu9t8ke/t4BDfwUBfdlO4mAT1yJfB3T/OZQNfhT63n2gW/3R7y3g0O8a0IkF/FeM2++psdHnvelPIn3f7o9+bwGHvoCuwTZ30vjus/Ab/tHvLeDQX0FAX2zoPdAju4xs9SDa+G5MW/7RH/Ee6HvYaEC3uw/P5vcD3fKP/oiAvoeNBvT++HXMtv4TbHtH+k3/6KcE9D1sM6D7s5ANH0Vb/p1IG//RTwjoe9hmQKe/FmeLR9GGfyvn1n/0LwQUoBsBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQgCIBBSgSUIAiAQUoElCAIgEFKBJQOvv68eb3v/f/8O3LzW9/pb8bNkdAae3u5ubT9P/CNQkorT2eef77580f/6S/F7ZHQOnt/ubmw/fvt17AkyCgNLdv56GicG0CSnO7V+//5cvjpSS4LgGlu7ubnc/p74JNElC6+/bFC3hCBJT2bgWUEAGlu3sv4UkRUJrbvYL/z//dXaBECCjN3e1OP+99DokIAaW3rx93Z58+CU+GgNLb4TNIu4y6jsT1CSitPX0G6dZ1JAIElM6+PX0GyW4iJAgonb3sYmc/OwIEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKBIQAGKBBSgSEABigQUoEhAAYoEFKDo/wMZwoChHenVFgAAAABJRU5ErkJggg==" title alt width="672" /></p>
+<pre class="r"><code>t.test(x)</code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  x
+## t = -1.1972, df = 9999, p-value = 0.2313
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -0.031780139  0.007680201
+## sample estimates:
+##   mean of x 
+## -0.01204997</code></pre>
+<p>You can also insert “inline” results, like the following:</p>
+<p>The mean of <code>x</code> is -0.01205.</p>
+<p>Clicking on the little question mark in the RStudio GUI above this document will point you towards lots of helpful documentation on the details of Markdown and R Markdown documents.</p>
 </div>
 <div id="reading-and-writing-datafiles" class="section level1">
 <h1>Reading and writing data/files</h1>
+<div id="weird-file-types" class="section level2">
+<h2>Weird file types</h2>
+<p>Package for reading Excel data: <code>xlsx</code></p>
+<p>Package for other stats packages (SPSS, SAS, Stata): <code>foreign</code></p>
+</div>
+<div id="reading-.rdata" class="section level2">
+<h2>“Reading” .RData</h2>
+<p><code>load()</code> puts objects in your workspace</p>
+<pre class="r"><code># NOTE: this code block is marked eval = FALSE, so it will not
+#       run. This is because the files mentioned are fake, and
+#       will produce errors if run.
+mydata &lt;- load(&quot;otherdata.RData&quot;)  # otherdata.RData contains object &quot;foo&quot;
+
+# mydata == &quot;foo&quot;
+load(&quot;otherdata.RData&quot;)  # gets &quot;foo&quot; into your workspace
+mydata &lt;- foo # make a new object</code></pre>
+</div>
+<div id="look-at-the-options" class="section level2">
+<h2>Look at the options!</h2>
+<pre class="r"><code>?read.table
+
+mydata &lt;- read.csv(filename, na.strings = c(&quot;NA&quot;, &quot;N/A&quot;, &quot;n/a&quot;, &quot; &quot;, &quot;nuthin&quot;))
+
+?readLines
+?scan</code></pre>
+</div>
+<div id="writing-files" class="section level2">
+<h2>Writing files!</h2>
+<pre class="r"><code>?write.table # .csv, etc.</code></pre>
+<p>Catches - rownames!</p>
+<pre class="r"><code>write.table(mydata, file = &quot;outputfile.txt&quot;, sep = &quot;\t&quot;,
+            row.names = FALSE)  # good for exporting data</code></pre>
+</div>
 </div>
 <div id="data-types" class="section level1">
 <h1>Data types</h1>
@@ -78,38 +159,529 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li>NULL</li>
 <li>others (e.g, “Date”)</li>
 </ul>
+<div id="numeric" class="section level2">
+<h2>Numeric</h2>
+<ul>
+<li>numbers!</li>
+<li>sometimes integers can differ from non-integers</li>
+<li><code>as.numeric()</code> forces it to be a number (not integers)</li>
+<li><code>1L</code> is an integer</li>
+<li>have mean, medians</li>
+</ul>
+</div>
+<div id="characters" class="section level2">
+<h2>Characters</h2>
+<ul>
+<li><code>as.character()</code> converts to characters</li>
+<li>more primitive than factors</li>
+<li>can manipulate with regular expressions, other text functions</li>
+</ul>
+</div>
+<div id="factors" class="section level2">
+<h2>Factors</h2>
+<ul>
+<li>Actually numbers under the hood</li>
+<li>Act like numbers + labels</li>
+<li>VERY useful for many kinds of analyses</li>
+<li>if a column is a <em>property</em> of data (not a measure itself), factors are usually best
+<ul>
+<li>groupings = good as factors</li>
+<li>conditions = good as factors</li>
+</ul></li>
+<li>if a column is <em>data</em>, maybe consider keeping it a string</li>
+<li><code>as.factor()</code> coerces to a factor</li>
+<li><code>factor()</code> creates a factor</li>
+<li>factors have <em>levels</em>: categories</li>
+<li><code>stringsAsFactors</code> : option for how to read in character vectors
+<ul>
+<li>= FALSE if you don’t want to read in characters as factors</li>
+</ul></li>
+</ul>
+</div>
+<div id="logicals" class="section level2">
+<h2>Logicals</h2>
+<ul>
+<li>TRUE and FALSE</li>
+<li>if coerced to <code>as.numeric</code>, TRUE == 1, FALSE == 0
+<ul>
+<li>can take the mean of a logical vector</li>
+</ul></li>
+<li>Shortcuts: T and F
+<ul>
+<li><em>DANGER</em>: T and F can be overwritten</li>
+</ul></li>
+<li>logical operators create logical vectors
+<ul>
+<li><code>==</code></li>
+<li><code>&gt;</code></li>
+<li><code>&lt;</code></li>
+<li><code>|</code> This is the “long bar”, meaning (inclusive) “or” (aka “pipe”)</li>
+<li><code>&amp;</code> == “and”</li>
+<li><code>&gt;=</code> greater or equal</li>
+<li><code>!</code> is NOT</li>
+<li><code>&amp;&amp;</code> and <code>||</code> for more specific programming sitauations</li>
+</ul></li>
+</ul>
+<pre class="r"><code>3 &lt; 4</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>sleep</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 15  -0.1     2  5
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code>sleep$extra &gt; 0</code></pre>
+<pre><code>##  [1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+## [12]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<pre class="r"><code>which(sleep$extra &gt; 0)</code></pre>
+<pre><code>##  [1]  1  6  7  8 10 11 12 13 14 16 17 18 19 20</code></pre>
+</div>
+<div id="na-and-null-and-others" class="section level2">
+<h2>NA and NULL (and others)</h2>
+<ul>
+<li><code>NA</code> mean “missing value” or “missing data”</li>
+<li><code>NULL</code> means “nothing”, the absence of something</li>
+<li><code>Inf</code> and <code>-Inf</code></li>
+<li><code>NaN</code></li>
+</ul>
+<p>Handling NAs - can be a a huge pain - sometimes <code>na.rm = TRUE</code> (like for <code>mean()</code>)</p>
+<pre class="r"><code>x &lt;- c(1, 2, NA, 4, 68)
+mean(x)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>mean(x, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 18.75</code></pre>
+<ul>
+<li>sometimes it’s other stuff</li>
+<li><code>cor()</code> use = “pairwise.complete.obs”</li>
+<li>no universal “deal with NAs” argument</li>
+</ul>
+</div>
 </div>
 <div id="more-subsetting" class="section level1">
 <h1>More subsetting</h1>
+<div id="basics" class="section level2">
+<h2>Basics</h2>
+<pre class="r"><code>sleep</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 15  -0.1     2  5
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code>sleep[sleep$group == 1, ]</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10</code></pre>
+<pre class="r"><code>sleep$group == 1</code></pre>
+<pre><code>##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+## [12] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>sleep[which(sleep$group == 1), ]</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10</code></pre>
+<pre class="r"><code>which(sleep$group == 1)</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<pre class="r"><code>sleep[sleep$group == 1 &amp; sleep$extra &gt; 0, ]</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 10   2.0     1 10</code></pre>
+<pre class="r"><code>sleep[sleep$group == 1 | sleep$extra &gt; 0, ]</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code># &quot;where&quot;
+sleep[!sleep$group == 1, ]</code></pre>
+<pre><code>##    extra group ID
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 15  -0.1     2  5
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code>sleep[sleep$ID == c(1, 3, 4, 6), ]  # DOESN'T WORK</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 16   4.4     2  6</code></pre>
+<pre class="r"><code>sleep[sleep$ID %in% c(1, 3, 4, 6), ]</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 6    3.4     1  6
+## 11   1.9     2  1
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 16   4.4     2  6</code></pre>
+<pre class="r"><code>sleep$ID %in% c(1, 3, 4, 6)</code></pre>
+<pre><code>##  [1]  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+## [12] FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>sleep[!sleep$ID %in% c(1, 3, 4, 6), ]  # &quot;not in&quot;</code></pre>
+<pre><code>##    extra group ID
+## 2   -1.6     1  2
+## 5   -0.1     1  5
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10
+## 12   0.8     2  2
+## 15  -0.1     2  5
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code># ?subset  # check Warning
+subset(sleep, extra &gt; 0 &amp; group == 2)</code></pre>
+<pre><code>##    extra group ID
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code># dplyr is better (IMHO)</code></pre>
+</div>
+<div id="catches-with-nas" class="section level2">
+<h2>Catches with NAs</h2>
+<pre class="r"><code>x &lt;- c(1, 2, NA, 5)
+x &gt; 3</code></pre>
+<pre><code>## [1] FALSE FALSE    NA  TRUE</code></pre>
+<pre class="r"><code>x == NA</code></pre>
+<pre><code>## [1] NA NA NA NA</code></pre>
+<pre class="r"><code>is.na(x)</code></pre>
+<pre><code>## [1] FALSE FALSE  TRUE FALSE</code></pre>
+<pre class="r"><code># ?is.null</code></pre>
+</div>
 </div>
 <div id="data-manipulation" class="section level1">
 <h1>Data manipulation</h1>
 <div id="combining-data-frame-objects" class="section level2">
 <h2>Combining data frame objects</h2>
+<div id="rbind-and-cbind" class="section level3">
+<h3><code>rbind()</code> and <code>cbind()</code></h3>
 <ul>
-<li>rbind, cbind</li>
-<li>merge</li>
+<li>rbind
+<ul>
+<li>glues rows on top of each other</li>
+<li>expects same columns</li>
+<li>new and improved <code>rbind_all()</code> and <code>rbind_list()</code> in <code>dplyr</code> package</li>
+</ul></li>
+<li>cbind
+<ul>
+<li>glues columns next to each other</li>
+<li>need to be the same length</li>
+</ul></li>
 </ul>
+<pre class="r"><code>sleep1 &lt;- sleep[sleep$group == 1,  ]
+sleep2 &lt;- sleep[sleep$group == 2,  ]
+sleep1</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10</code></pre>
+<pre class="r"><code>sleep2</code></pre>
+<pre><code>##    extra group ID
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 15  -0.1     2  5
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code>sleep.reassembled &lt;- rbind(sleep1, sleep2)
+sleep.reassembled</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 15  -0.1     2  5
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code>sleep.left &lt;- sleep[, 1:2]
+sleep.left</code></pre>
+<pre><code>##    extra group
+## 1    0.7     1
+## 2   -1.6     1
+## 3   -0.2     1
+## 4   -1.2     1
+## 5   -0.1     1
+## 6    3.4     1
+## 7    3.7     1
+## 8    0.8     1
+## 9    0.0     1
+## 10   2.0     1
+## 11   1.9     2
+## 12   0.8     2
+## 13   1.1     2
+## 14   0.1     2
+## 15  -0.1     2
+## 16   4.4     2
+## 17   5.5     2
+## 18   1.6     2
+## 19   4.6     2
+## 20   3.4     2</code></pre>
+<pre class="r"><code>sleep.ID &lt;- sleep[, 3]
+sleep.ID</code></pre>
+<pre><code>##  [1] 1  2  3  4  5  6  7  8  9  10 1  2  3  4  5  6  7  8  9  10
+## Levels: 1 2 3 4 5 6 7 8 9 10</code></pre>
+<pre class="r"><code>sleep.reassembled.2 &lt;- cbind(sleep.left, sleep.ID)
+sleep.reassembled.2</code></pre>
+<pre><code>##    extra group sleep.ID
+## 1    0.7     1        1
+## 2   -1.6     1        2
+## 3   -0.2     1        3
+## 4   -1.2     1        4
+## 5   -0.1     1        5
+## 6    3.4     1        6
+## 7    3.7     1        7
+## 8    0.8     1        8
+## 9    0.0     1        9
+## 10   2.0     1       10
+## 11   1.9     2        1
+## 12   0.8     2        2
+## 13   1.1     2        3
+## 14   0.1     2        4
+## 15  -0.1     2        5
+## 16   4.4     2        6
+## 17   5.5     2        7
+## 18   1.6     2        8
+## 19   4.6     2        9
+## 20   3.4     2       10</code></pre>
+</div>
+<div id="merge" class="section level3">
+<h3><code>merge()</code></h3>
+<pre class="r"><code>subject.info &lt;- data.frame(ID = 3:12, gender = c(&quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;))
+summary(subject.info)</code></pre>
+<pre><code>##        ID           gender 
+##  Min.   : 3.00   female:5  
+##  1st Qu.: 5.25   male  :5  
+##  Median : 7.50             
+##  Mean   : 7.50             
+##  3rd Qu.: 9.75             
+##  Max.   :12.00</code></pre>
+<pre class="r"><code>sleep.merged &lt;- merge(sleep, subject.info)
+sleep</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 15  -0.1     2  5
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code>sleep.merged</code></pre>
+<pre><code>##    ID extra group gender
+## 1  10   2.0     1 female
+## 2  10   3.4     2 female
+## 3   3   1.1     2   male
+## 4   3  -0.2     1   male
+## 5   4   0.1     2   male
+## 6   4  -1.2     1   male
+## 7   5  -0.1     1 female
+## 8   5  -0.1     2 female
+## 9   6   3.4     1 female
+## 10  6   4.4     2 female
+## 11  7   5.5     2 female
+## 12  7   3.7     1 female
+## 13  8   1.6     2 female
+## 14  8   0.8     1 female
+## 15  9   0.0     1   male
+## 16  9   4.6     2   male</code></pre>
+<pre class="r"><code>nrow(sleep)</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code>nrow(sleep.merged)</code></pre>
+<pre><code>## [1] 16</code></pre>
+<pre class="r"><code>mysleep &lt;- sleep
+mysleep$ID &lt;- as.numeric(mysleep$ID)
+
+sleep.merged2 &lt;- merge(mysleep, subject.info, all = TRUE)
+sleep.merged2</code></pre>
+<pre><code>##    ID extra group gender
+## 1   1   0.7     1   &lt;NA&gt;
+## 2   1   1.9     2   &lt;NA&gt;
+## 3   2  -1.6     1   &lt;NA&gt;
+## 4   2   0.8     2   &lt;NA&gt;
+## 5   3   1.1     2   male
+## 6   3  -0.2     1   male
+## 7   4   0.1     2   male
+## 8   4  -1.2     1   male
+## 9   5  -0.1     1 female
+## 10  5  -0.1     2 female
+## 11  6   3.4     1 female
+## 12  6   4.4     2 female
+## 13  7   5.5     2 female
+## 14  7   3.7     1 female
+## 15  8   1.6     2 female
+## 16  8   0.8     1 female
+## 17  9   0.0     1   male
+## 18  9   4.6     2   male
+## 19 10   2.0     1 female
+## 20 10   3.4     2 female
+## 21 11    NA  &lt;NA&gt;   male
+## 22 12    NA  &lt;NA&gt;   male</code></pre>
+<pre><code>- simplest: have ONE column in common, named the same thing (with the same values)
+- can get MUCH more complex
+- `nrow()` good check on what was gained/lost during a merge</code></pre>
+</div>
 </div>
 <div id="creating-new-columns" class="section level2">
 <h2>Creating new columns</h2>
-</div>
-<div id="transforming-columns" class="section level2">
-<h2>Transforming columns</h2>
-</div>
-<div id="dealing-with-factors" class="section level2">
-<h2>Dealing with factors</h2>
-<ul>
-<li>levels</li>
-<li>recoding</li>
-<li>reordering</li>
-<li>droplevels</li>
-<li>as.numeric vs. as.character</li>
-<li>stringsAsFactors</li>
-</ul>
-</div>
-<div id="reshaping-data" class="section level2">
-<h2>Reshaping data</h2>
+<pre class="r"><code>mysleep</code></pre>
+<pre><code>##    extra group ID
+## 1    0.7     1  1
+## 2   -1.6     1  2
+## 3   -0.2     1  3
+## 4   -1.2     1  4
+## 5   -0.1     1  5
+## 6    3.4     1  6
+## 7    3.7     1  7
+## 8    0.8     1  8
+## 9    0.0     1  9
+## 10   2.0     1 10
+## 11   1.9     2  1
+## 12   0.8     2  2
+## 13   1.1     2  3
+## 14   0.1     2  4
+## 15  -0.1     2  5
+## 16   4.4     2  6
+## 17   5.5     2  7
+## 18   1.6     2  8
+## 19   4.6     2  9
+## 20   3.4     2 10</code></pre>
+<pre class="r"><code>mysleep$Study &lt;- &quot;Study1&quot;
+mysleep$noise &lt;- rnorm(20)
+mysleep</code></pre>
+<pre><code>##    extra group ID  Study        noise
+## 1    0.7     1  1 Study1 -1.942688043
+## 2   -1.6     1  2 Study1  0.185989411
+## 3   -0.2     1  3 Study1 -0.093429876
+## 4   -1.2     1  4 Study1  1.141417533
+## 5   -0.1     1  5 Study1  0.814185943
+## 6    3.4     1  6 Study1  0.881545573
+## 7    3.7     1  7 Study1 -0.901199493
+## 8    0.8     1  8 Study1 -2.023455451
+## 9    0.0     1  9 Study1 -0.739902196
+## 10   2.0     1 10 Study1  0.008674133
+## 11   1.9     2  1 Study1  0.882964321
+## 12   0.8     2  2 Study1 -0.030507014
+## 13   1.1     2  3 Study1  0.296071397
+## 14   0.1     2  4 Study1 -0.115726271
+## 15  -0.1     2  5 Study1 -0.829847179
+## 16   4.4     2  6 Study1 -0.187480364
+## 17   5.5     2  7 Study1 -0.566861264
+## 18   1.6     2  8 Study1  1.123290474
+## 19   4.6     2  9 Study1  0.018997177
+## 20   3.4     2 10 Study1 -0.712685763</code></pre>
 </div>
 </div>
 

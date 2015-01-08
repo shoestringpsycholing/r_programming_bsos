@@ -1,0 +1,22 @@
+---
+title: "Day 3 Homework"
+output: html_document
+---
+
+The goal of this homework is to get practice with manipulating data.
+
+1. Make both a "wide" and a "long" version of your data
+
+2. Transform a variable
+
+3. Recode a factor
+
+4. Add a new factor, where the levels are conditional on the values of some other variable. E.g., a factor of "high", "medium", and "low" based on thresholds for another variable.
+
+5. Reorder the levels of this new factor
+
+6. Choose a factor that could be re-coded as multiple dimensions (recall the sepal/petal vs. length/width breakdown). If you don't have one, try to create one.  Now create two (or more) new factors that represent these dimensions.
+
+7. Using `dcast`, aggregate some variable into "cell means" of some kind.
+
+8.  Save all of the above in a well-documented R Markdown document.  Email me the .Rmd file (and if you use different or updated data from Day 2 Homework, send that to me, too).

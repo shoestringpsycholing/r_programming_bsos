@@ -3,6 +3,8 @@ title: "Day 3 Practice"
 output: html_document
 ---
 
+**NOTE:**  this was postponed to Day 4
+
 1. Make a copy of the `iris` data set in your workspace (i.e., assign the value of `iris` to a new name).
 
 2. Reshape the data frame into "long" format.  
