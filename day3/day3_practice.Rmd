@@ -7,6 +7,12 @@ output: html_document
 
 1. Make a copy of the `iris` data set in your workspace (i.e., assign the value of `iris` to a new name).
 
+```{r}
+myris <- iris
+head(iris)
+```
+
+
 2. Reshape the data frame into "long" format.  
   - Can you still tell which measurements came from which plants?  If not, can you do something about that?
   - Are there better names for the `variable` and `value` columns?  Change them!

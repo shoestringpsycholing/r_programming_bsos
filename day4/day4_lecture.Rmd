@@ -3,6 +3,8 @@ title: "Day 4 Lecture"
 output: html_document
 ---
 
+# Review?
+
 # Data manipulation
   1. Simple column transformations
   2. Dealing with factors
@@ -11,17 +13,133 @@ output: html_document
 
 ## Simple column transformations
 
+```{r}
+mysleep <- sleep
+mysleep$extra2 <- mysleep$extra * 2
+mysleep$extra3 <- log(mysleep$extra + 10)
+mysleep
+mysleep$extra2 <- mysleep$extra2 - 4
+mysleep
+mysleep$extra2 <- NULL  # deletes the column
+mysleep
+mysleep$extra3 <- NA
+mysleep
+mysleep$three <- 3
+mysleep
+mysleep$four <- c(1, 2, 3) # doesn't work
+mysleep
+```
+
 ## Dealing with factors
   - levels
+  - droplevels
   - recoding
   - reordering
-  - droplevels
   - as.numeric vs. as.character
-  - stringsAsFactors
+  - stringsAsFactors = argument to `read.table()`
+
+### droplevels
+```{r}
+mysleep <- sleep
+summary(mysleep)
+levels(mysleep$ID)
+summary(mysleep$ID)
+
+mysleep.1 <- subset(mysleep, group == "1")
+mysleep.1 <- subset(mysleep.1, !ID == "3")
+# mysleep.1 <- subset(mysleep, group == 1 & !ID == 3)
+# mysleep.1 <- mysleep[mysleep$group == 1 & !mysleep$ID == 3, ]
+summary(mysleep.1$ID)
+summary(mysleep.1$group)
+
+mysleep.2 <- droplevels(mysleep.1)
+summary(mysleep.2$ID)
+summary(mysleep.2$group)
+```
+
+### recoding & reordering
+  - relevel, reorder, factor, levels
+```{r}
+mysleep <- sleep
+summary(mysleep)
+
+levels(mysleep$group)
+levels(mysleep$group) <- c("pre", "post")  # changes LABELS of the levels
+levels(mysleep$group)
+mysleep
+
+# levels(mysleep$group) <- c("post", "pre")  # DOESN'T CHANGE ORDER!
+# levels(mysleep$group)
+# mysleep
+
+mysleep$group <- relevel(mysleep$group, "post")  # changes order
+levels(mysleep$group)
+summary(mysleep)
+mysleep
+
+# avoid reorder() except for special cases
+
+mysleep$ID <- factor(mysleep$ID, levels = c("2", "3", "1", "5", "10", "7", "9", "8", "4", "6"))
+levels(mysleep$ID)
+mysleep
+
+mysleep$IDlevelnum <- as.numeric(mysleep$ID)
+mysleep
+
+```
+
+ - `reorder()`
+  - takes two vectors, a factor, and an "ordering" vector
+  - the "ordering" vector needs to be:
+    - the same length
+    - numeric values corrsponding to the order of levels in the factor
 
 ## Reshaping data
+Use the `reshape2` package!!!
+
+```{r}
+# install.packages("reshape2")
+library(reshape2)
+```
+
+### "Long" vs. "wide" data
+```{r}
+mysleep <- sleep
+mysleep
+levels(mysleep$group) <- c("pre", "post")
+mysleep.cast <- dcast(mysleep, ID ~ group, value.var = "extra")
+mysleep.cast
+
+myff <- french_fries
+head(myff)
+?melt.data.frame
+myff.melt <- melt(myff, id.vars = 1:4)
+myff.melt <- melt(myff, id.vars = c("time", "treatment", "subject", "rep"))
+myff.melt <- melt(myff, measure.vars = 5:9)
+myff.melt <- melt(myff, measure.vars = c("buttery", "potato", "grassy", "rancid", "painty"))
+head(myff.melt)
+summary(myff.melt)
+
+myff.melt <- melt(myff, id.vars = 1:4, value.name = "rating", variable.name = "taste")
+head(myff.melt)
+summary(myff.melt)
+
+recastff <- dcast(myff.melt, time + treatment + subject + rep ~ taste, 
+                  value.var = "rating")
+summary(recastff)
+```
+
+- Formula
 
 ## Aggregation (with the `reshape2` package)
+
+```{r}
+aggregateff <- dcast(myff.melt, treatment ~ taste, 
+                  value.var = "rating", fun.aggregate = mean, na.rm = TRUE)
+
+aggregateff
+```
+
 
 # Data cleaning
 
