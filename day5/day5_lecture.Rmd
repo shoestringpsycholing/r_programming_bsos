@@ -23,7 +23,7 @@ http://accidental-art.tumblr.com/
   - lots of isolated plot functions
   - lots of weird little parameters to worry about
   - some handy quick-plot functions from base graphics:
-    - `plot()` : a generic function that will often produce something interesting, can do scatterplots with a formula `x ~ y`
+    - `plot()` : a generic function that will often produce something interesting, can do scatterplots with a formula `y ~ x`
     - `hist()` : histogram of a vector
     - `boxplot()` : boxplot, using a formula `variable ~ grouping.factor`
 
@@ -45,7 +45,7 @@ http://accidental-art.tumblr.com/
 ## A "Grammar of Graphics"
   - based on work by Leland Wilkinson, a "theory" of graphic display of data
   - Hadley implemented this framework as his dissertation
-  - `ggplot` is the overhauled version of the original implementation, and it is still under active development
+  - `ggplot2` is the overhauled version of the original implementation, and it is still under active development
   - the idea is to implement a general system for mapping data variables to *aesthetics* (Wilkinson's term), i.e., visual dimensions (x, y, color, etc.)
   - allows for high-level control of the structure of a plot, to allow for flexible, powerful visualizations
   
@@ -58,6 +58,88 @@ http://accidental-art.tumblr.com/
   - add other things for fine control over graphical parameters, etc.
 
 ## Graphing the `iris` package
+
+```{r}
+library(ggplot2)
+myris <- iris
+summary(myris)
+
+ggplot(myris, aes(x = Sepal.Length)) + geom_histogram()
+
+ggplot(myris, aes(x = Sepal.Length)) + geom_histogram(binwidth = .5)
+
+ggplot(myris, aes(x = Sepal.Length)) + geom_histogram(binwidth = .01)
+
+mybaseplot <- ggplot(myris, aes(x = Sepal.Length))
+
+mybaseplot + geom_histogram(binwidth = .2)
+
+names(mybaseplot)
+str(mybaseplot)
+
+mybaseplot + geom_density(adjust = .5, fill = "grey")
+
+```
+
+```{r}
+colors()
+```
+
+```{r}
+ggplot(myris, aes(x = Sepal.Length, y = Sepal.Width)) + geom_point()
+
+ggplot(myris, aes(x = Sepal.Length, y = Sepal.Width)) + geom_point(color = "red")
+
+ggplot(myris, aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point(aes(color = Species), size = 10) + 
+  theme_minimal()
+
+ggplot(myris, aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point(aes(color = Species, size = Petal.Width)) + 
+  theme_minimal()
+
+ggplot(myris, aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point() + 
+  geom_smooth()
+
+ggplot(myris, aes(x = Sepal.Length, y = Sepal.Width)) + 
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+ggplot(myris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) + 
+  geom_point(size = 4) + 
+  theme_minimal() +
+  geom_smooth(method = "lm")
+
+
+```
+
+### Faceting
+
+```{r}
+
+ggplot(myris, aes(x = Sepal.Length)) + geom_histogram() + 
+  facet_wrap(~ Species)
+
+ggplot(myris, aes(x = Sepal.Length)) + geom_histogram() + 
+  facet_grid(Species ~ .)
+
+ggplot(myris, aes(x = Sepal.Length)) + geom_histogram() + 
+  facet_grid(Species ~ .)
+
+```
+
+### Saving plots
+
+```{r}
+pdf("myplot.pdf", width = 10, height = 4)
+ggplot(myris, aes(x = Sepal.Length)) + geom_histogram() + 
+  facet_grid(Species ~ .)
+dev.off()
+
+?Devices
+```
+
 
 # Practice 5
 

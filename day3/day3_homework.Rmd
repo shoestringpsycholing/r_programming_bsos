@@ -7,13 +7,36 @@ The goal of this homework is to get practice with manipulating data.
 
 1. Make both a "wide" and a "long" version of your data
 
+- casting with a LOT of variables
+
+```{r eval=FALSE}
+
+mydata.wide <- dcast(mydata.long, [80 columns here] ~ split)
+
+columns.to.keep <- colnames(mydata.long)[1:80]
+columns.to.keep.pasted <- paste(columns.to.keep, collapse = " + ")
+my.cast.formula <- as.formula(paste(columns.to.keep.pasted, " ~ split"))
+class(my.cast.formula)  # "formula"
+mydata.wide <- dcast(mydata.long, formula = my.cast.formula)
+
+
+```
+
 2. Transform a variable
+
 
 3. Recode a factor
 
 4. Add a new factor, where the levels are conditional on the values of some other variable. E.g., a factor of "high", "medium", and "low" based on thresholds for another variable.
+```{r}
+
+
+
+```
+
 
 5. Reorder the levels of this new factor
+
 
 6. Choose a factor that could be re-coded as multiple dimensions (recall the sepal/petal vs. length/width breakdown). If you don't have one, try to create one.  Now create two (or more) new factors that represent these dimensions.
 

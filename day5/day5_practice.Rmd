@@ -5,11 +5,42 @@ output: html_document
 
 0. Get the `french_fries` data into "long" format.  Call the new value variable "rating" and the factor with all the descriptors "flavor". Re-code the labels of the `treatment` variable to be "oil1", "oil2", and "oil3".
 
+```{r}
+library(reshape2)
+library(ggplot2)
+
+myff <- french_fries
+head(myff)
+levels(myff$treatment) <- c("oil1", "oil2", "oil3")
+
+myff.melt <- melt(myff, id.vars = 1:4, variable.name = "flavor", value.name = "rating")
+head(myff.melt)
+```
+
+
 1. Use `ggplot` to plot a histogram and a density plot (separately) for `rating` 
    - Try some different values for `binwidth` for the histogram.
    - Try some different values for `adjust` for the density plot.
 
+```{r}
+ggplot(myff.melt, aes(rating)) + geom_histogram()
+
+ggplot(myff.melt, aes(rating)) + geom_density()
+
+ggplot(myff.melt, aes(rating)) + geom_histogram(binwidth = .1)
+
+ggplot(myff.melt, aes(rating)) + geom_density(adjust = 2)
+
+```
+
+
 2. How does the distribution look?  Try transforming the variable and try to get it to look more normal (i.e., more Gaussian).  If it already looks normal, do something to it to make it look non-normal.
+
+```{r}
+ggplot(myff.melt, aes(log(rating))) + geom_histogram()
+ggplot(myff.melt, aes(sqrt(rating))) + geom_histogram()
+
+```
 
 3. Let's break this up by the `treatment` factor
    - Plot it as a density plot, mapping `color` to the factor
@@ -17,11 +48,31 @@ output: html_document
    - Same, using `linetype` instead of `color`
    - Plot the data as a boxplot, with the factor as `x` and the numerical variable as `y`
 
+```{r}
+ggplot(myff.melt, aes(sqrt(rating))) + geom_density(aes(color = treatment))
+
+ggplot(myff.melt, aes(x = treatment, y = rating)) + geom_boxplot(aes(fill = flavor)) + facet_wrap(~ flavor)
+
+```
+
+
 4. Now let's look at breaking up a histogram across this factor.  With the same variables you used in #3:
    - Plot a histogram, but use faceting to display them, one above the other.
    - Try mapping the factor to `color` or `fill`, to see what that looks like.
 
-5. Now cast the data back to where the different flavors are in differnet columns. Pick two of the flavor columns to explore
+```{r}
+ggplot(myff.melt, aes(sqrt(rating))) + geom_histogram() + 
+  facet_grid(treatment ~ .)
+
+ggplot(myff.melt, aes(sqrt(rating))) + geom_histogram(aes(color = treatment))
+ggplot(myff.melt, aes(sqrt(rating))) + geom_histogram(aes(fill = treatment))
+
+ggplot(myff.melt, aes(sqrt(rating))) + geom_histogram(aes(fill = flavor))
+
+```
+
+
+5. Now cast the data back to where the different flavors are in different columns. Pick two of the flavor columns to explore
    - Create a scatterplot, with one variable mapped to `x` and the other to `y`.
    - Plot a "loess" smoother on top of the scatterplot
    - Plot a regression line on top of the scatterplot (instead of the loess)
@@ -30,4 +81,16 @@ output: html_document
    - Map `treatment` to `color`
    - Facet by `treatment`
 
+```{r}
+myff.cast <- dcast(myff.melt, time + treatment + subject + rep ~ flavor, value = "rating")
+
+scatter <- ggplot(myff.cast, aes(x = buttery, y = rancid)) + geom_point()
+scatter
+scatter + geom_smooth()
+scatter + geom_smooth(method = "lm")
+
+ggplot(myff.cast, aes(x = buttery, y = rancid, color = treatment)) + geom_point() + geom_smooth(method = "lm")
+```
+
 7. Output all of the plots above as a single PDF.
+

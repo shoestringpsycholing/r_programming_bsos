@@ -5,11 +5,32 @@ output: html_document
 
 1. Read in the data base of phoneme pairs from Wedel, Kaplan, and Jackson (2013).  The relative path from the working directory of this project is: "scottdata/CognitionPaperModifiedData.csv"
 
+```{r}
+getwd()
+```
+
+
+```{r eval = TRUE}
+mydata <- read.csv("../scottdata/CognitionPaperModifiedData.csv")
+summary(mydata)
+```
+
+
 2. Read in the data using the WRONG function.  What does it look like?
 
 3. Change some (or all) of the column names.  Provide a table that links original column names with the current/new column names.
 
+```{r eval = TRUE}
+mydata2 <- mydata[!mydata$AllMinPairs == NA, ]
+mydata2
+mydata2 <- mydata[!is.na(mydata$AllMinPairs), ]
+mydata2
+
+```
+
 4. Locate NAs.  Remove all rows containing NAs.
+
+
 
 5. Recode the "Corpus" variable in the following way:
 Am = American
@@ -31,11 +52,32 @@ results <- glm(DV ~ predictor1 + predictor2 + ...  ,
 ```
   - Hint #2: you need the DV to be 0s and 1s, not a factor.
   
+```{r eval= TRUE}
+mydata$DV <- ifelse(mydata$Merged == "Merged", 1, 0)
+mydata$DV2 <- as.numeric(mydata$Merged) - 1  # wrong order, but a possibility
+results <- glm(DV ~ WithinMinPairs, data = mydata, family = "binomial")
+
+
+```
+
+  
 7. Use `summary()` to display the results.
 
 8. Using INLINE code, report the estimate, standard error, and p-value for the WithinMinPairs coefficient.  This will look something like:
 
-The estimate for the WithinMinPairs coefficient was `r `, with a standard error of `r ` and a p of `r `.
+```{r eval = TRUE}
+mysummary <- summary(results)
+names(mysummary)
+mysummary$coefficients
+class(mysummary$coefficients)
+mysummary$coefficients[2, 1]
+est <- mysummary$coefficients["WithinMinPairs", "Estimate"]
+std.err <- mysummary$coefficients["WithinMinPairs", "Std. Error"]
+p.value <- mysummary$coefficients["WithinMinPairs", "Pr(>|z|)"]
+
+```
+
+The estimate for the WithinMinPairs coefficient was `r round(est, 4)`, with a standard error of `r std.err` and a p of `r round(p.value, 3)`.
 
 EXTRA CREDIT: figure out how to display the above results with only a few decimal places
 
