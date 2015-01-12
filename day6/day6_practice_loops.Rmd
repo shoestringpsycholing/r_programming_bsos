@@ -1,0 +1,17 @@
+---
+title: "Day 6 Practice, Loops"
+output: html_document
+---
+
+1. Create a chunk of code that does the following:
+  - get a subset of data from the `iris` data set that just includes one species
+  - get the mean of each of the values, and arrange these in a one-row data frame
+  - make a PDF plot of Sepal.Width by Petal.Width
+  
+2. Now make a copy of this code and turn it into a loop:
+  - loop through all three species
+  - combine the results from each loop into a single data frame
+    - do this the "slow" way and the "fast" way
+  - combine the plots into a single PDF
+  
+3. Make another copy of the loop, adding an `if` statement that will have the effect of skipping plants where `Petal.Width` is less than 1.

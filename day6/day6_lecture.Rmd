@@ -1,0 +1,65 @@
+---
+title: "Day 6"
+output: html_document
+---
+
+# Review HW 4
+
+# Review HW 5
+
+# Loops and control
+  - if else
+  - for
+    - counters (sets)
+    - "growing" results
+    - debugging
+    - break, next
+
+## if/else
+
+```{r}
+x <- 10
+
+if(x > 5) {
+  x <- x^2
+}
+
+if(x > 5) {
+  x <- x^2
+} else {
+  x <- x^3
+}
+
+if(x > 5) {
+  x <- x^2
+} else if(x > 3) {
+  x <- x^3
+} else {
+  x <- x - 1
+}
+ 
+y <- TRUE
+
+if(y) {
+  hist(rnorm(1000))
+}
+
+
+```
+
+## for loops
+
+```{r}
+mydf <- data.frame(x = rnorm(n = 1000, mean = 2, sd = 1), groups = rep(1:10, each = 100))
+
+
+
+```
+
+
+# Loops practice
+
+# GitHub
+
+# GitHub practice
+  

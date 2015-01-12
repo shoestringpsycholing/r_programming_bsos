@@ -1,0 +1,16 @@
+---
+title: "Day 6 Homework"
+output: html_document
+---
+
+1. Think carefully about your data.  Think about something you would like to do multiple times, to subsets of your data.  
+
+2. Write out (in plain English, in the notebook) what you are trying to do
+
+3. Write some "pseudo-code" comments in an R chunk, as an outline
+
+4. Write some (real) code that will do what you want ONCE, on one subset of the data.
+
+5. Copy that code chunk, and convert it into a loop, which will do what you want over all the groups, concatenating the results.
+
+6. Copy that loop again, and at a condition (`if`) statement to add some further control about ignoring some groups or some other conditional operation.

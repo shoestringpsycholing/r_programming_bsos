@@ -1,0 +1,16 @@
+---
+title: "Day 6 Practice GitHub"
+output: html_document
+---
+
+1. Assemble all of your homework up to this point into a folder, that is NOT itself contained inside a git repository.
+
+2. Start a repo with `git init`
+
+3. Create the repo on GitHub
+
+4. Follow the instructions to make your first "push"
+
+5. Check GitHub yo make sure it pushed correctly.
+
+6. Email me your repo address.
