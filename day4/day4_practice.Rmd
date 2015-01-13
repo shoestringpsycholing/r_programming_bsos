@@ -5,31 +5,48 @@ output: html_document
 
 1. Read in the data base of phoneme pairs from Wedel, Kaplan, and Jackson (2013).  The relative path from the working directory of this project is: "scottdata/CognitionPaperModifiedData.csv"
 
-```{r}
-getwd()
-```
-
-
 ```{r eval = TRUE}
+# first one for running in RStudio, second path for knitting
+#mydata <- read.csv("scottdata/CognitionPaperModifiedData.csv")
 mydata <- read.csv("../scottdata/CognitionPaperModifiedData.csv")
 summary(mydata)
 ```
 
-
 2. Read in the data using the WRONG function.  What does it look like?
+
+```{r eval = TRUE}
+# first one for running in RStudio, second path for knitting
+#mydata <- read.table("scottdata/CognitionPaperModifiedData.csv")
+mydata <- read.table("../scottdata/CognitionPaperModifiedData.csv")
+summary(mydata)
+
+# Read in correctly again, for following code
+#mydata <- read.csv("scottdata/CognitionPaperModifiedData.csv")
+mydata <- read.csv("../scottdata/CognitionPaperModifiedData.csv")
+
+```
 
 3. Change some (or all) of the column names.  Provide a table that links original column names with the current/new column names.
 
 ```{r eval = TRUE}
-mydata2 <- mydata[!mydata$AllMinPairs == NA, ]
-mydata2
-mydata2 <- mydata[!is.na(mydata$AllMinPairs), ]
-mydata2
-
+mydata2 <- mydata
+colnames(mydata2)
+colnames(mydata2)[c(1, 3)] <- c("Language", "PhonemePair")
 ```
 
 4. Locate NAs.  Remove all rows containing NAs.
 
+```{r eval = TRUE}
+# mydata2 <- mydata[!mydata$AllMinPairs == NA, ] # DOESN'T WORK
+
+mydata2 <- mydata[!is.na(mydata$AllMinPairs), ]
+summary(mydata2)
+
+# more comprehensive
+mydata3 <- mydata[complete.cases(mydata), ] # looks for any NAs in any column
+summary(mydata3)
+
+```
 
 
 5. Recode the "Corpus" variable in the following way:
@@ -42,6 +59,15 @@ Ko = Korean
 RP = British
 Sl = Slovakian
 Sp = Spanish
+
+```{r}
+old.levels <- levels(mydata$Corpus)
+new.levels <- levels(mydata$Corpus) <- c("American", "Dutch", "French", "German", "Cantonese", "Korean", "British", "Slovakian", "Spanish")
+print(data.frame(old.levels, new.levels))
+
+```
+
+
 
 6. Run a logistic regression, using `glm()`, where "Merged" status is the (binary) dependent variable, and "WithinMinPairs" is the predictor.
   - Hint #1: the basic usage of `glm()` is:
@@ -56,12 +82,15 @@ results <- glm(DV ~ predictor1 + predictor2 + ...  ,
 mydata$DV <- ifelse(mydata$Merged == "Merged", 1, 0)
 mydata$DV2 <- as.numeric(mydata$Merged) - 1  # wrong order, but a possibility
 results <- glm(DV ~ WithinMinPairs, data = mydata, family = "binomial")
-
-
 ```
 
   
 7. Use `summary()` to display the results.
+
+```{r}
+summary(results)
+```
+
 
 8. Using INLINE code, report the estimate, standard error, and p-value for the WithinMinPairs coefficient.  This will look something like:
 
@@ -77,7 +106,7 @@ p.value <- mysummary$coefficients["WithinMinPairs", "Pr(>|z|)"]
 
 ```
 
-The estimate for the WithinMinPairs coefficient was `r round(est, 4)`, with a standard error of `r std.err` and a p of `r round(p.value, 3)`.
+The estimate for the WithinMinPairs coefficient was `r round(est, 4)`, with a standard error of `r round(std.err, 4)` and a p of `r round(p.value, 3)`.
 
 EXTRA CREDIT: figure out how to display the above results with only a few decimal places
 

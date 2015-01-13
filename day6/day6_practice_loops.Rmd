@@ -7,11 +7,90 @@ output: html_document
   - get a subset of data from the `iris` data set that just includes one species
   - get the mean of each of the values, and arrange these in a one-row data frame
   - make a PDF plot of Sepal.Width by Petal.Width
-  
+
+```{r}
+myris <- iris
+myris.virginica <- myris[myris$Species == "virginica", ]
+sl <- mean(myris.virginica$Sepal.Length)
+sw <- mean(myris.virginica$Sepal.Width)
+pl <- mean(myris.virginica$Petal.Length)
+pw <- mean(myris.virginica$Petal.Width)
+my.answer <- data.frame(Species = "virginica", Sepal.Length = sl, Sepal.Width = sw, Petal.Length = pl, Petal.Width = pw)
+
+# OR
+myris <- iris
+myris.virginica <- myris[myris$Species == "virginica", ]
+myris.virginica.melt <- melt(myris.virginica, measure.vars = 1:4)
+my.answer <- dcast(myris.virginica.melt, Species ~ variable, value = "value", fun.aggregate = mean)
+
+```
+
 2. Now make a copy of this code and turn it into a loop:
   - loop through all three species
   - combine the results from each loop into a single data frame
     - do this the "slow" way and the "fast" way
   - combine the plots into a single PDF
-  
+
+```{r}
+myris <- iris
+
+# "slow" way
+my.answer <- data.frame(Species = NULL, Sepal.Length = NULL, Sepal.Width = NULL, Petal.Length = NULL, Petal.Width = NULL)
+for(this.species in levels(myris$Species)) {
+  myris.subset <- myris[myris$Species == this.species, ]
+  sl <- mean(myris.subset$Sepal.Length)
+  sw <- mean(myris.subset$Sepal.Width)
+  pl <- mean(myris.subset$Petal.Length)
+  pw <- mean(myris.subset$Petal.Width)
+  this.answer <- data.frame(Species = this.species, Sepal.Length = sl, Sepal.Width = sw, Petal.Length = pl, Petal.Width = pw)
+  my.answer <- rbind(my.answer, this.answer)
+}
+
+# "fast" way
+my.answer <- data.frame(Species = rep(NA, length(levels(myris$Species))), Sepal.Length = NA, Sepal.Width = NA, Petal.Length = NA, Petal.Width = NA)
+for(this.loop in 1:length(levels(myris$Species))) {
+  this.species <- levels(myris$Species)[this.loop]
+  myris.subset <- myris[myris$Species == this.species, ]
+  sl <- mean(myris.subset$Sepal.Length)
+  sw <- mean(myris.subset$Sepal.Width)
+  pl <- mean(myris.subset$Petal.Length)
+  pw <- mean(myris.subset$Petal.Width)
+  my.answer[this.loop, ] <- list(this.species, sl, sw, pl, pw)
+}
+
+
+```
+
+
 3. Make another copy of the loop, adding an `if` statement that will have the effect of skipping plants where `Petal.Width` is less than 1.
+
+```{r}
+# option 1 (no if)
+my.answer <- data.frame(Species = rep(NA, length(levels(myris$Species))), Sepal.Length = NA, Sepal.Width = NA, Petal.Length = NA, Petal.Width = NA)
+for(this.loop in 1:length(levels(myris$Species))) {
+  this.species <- levels(myris$Species)[this.loop]
+  myris.subset <- myris[myris$Species == this.species & myris$Petal.Width >= 1, ]
+  sl <- mean(myris.subset$Sepal.Length)
+  sw <- mean(myris.subset$Sepal.Width)
+  pl <- mean(myris.subset$Petal.Length)
+  pw <- mean(myris.subset$Petal.Width)
+  my.answer[this.loop, ] <- list(this.species, sl, sw, pl, pw)
+}
+
+# option 2 (skipping whole species)
+my.answer <- data.frame(Species = rep(NA, length(levels(myris$Species))), Sepal.Length = NA, Sepal.Width = NA, Petal.Length = NA, Petal.Width = NA)
+for(this.loop in 1:length(levels(myris$Species))) {
+  this.species <- levels(myris$Species)[this.loop]
+  myris.subset <- myris[myris$Species == this.species & myris$Petal.Width >= 1, ]
+  sl <- mean(myris.subset$Sepal.Length)
+  sw <- mean(myris.subset$Sepal.Width)
+  pl <- mean(myris.subset$Petal.Length)
+  pw <- mean(myris.subset$Petal.Width)
+  if(pw >= 1) {
+    my.answer[this.loop, ] <- list(this.species, sl, sw, pl, pw)
+  }
+}
+
+
+```
+
