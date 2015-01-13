@@ -1,0 +1,10 @@
+---
+title: "Day 7 Homework"
+output: html_document
+---
+
+1. Work on making progress on your Final Project.
+
+2. Document some road blocks you are running into.
+
+3. Email them to me before 7am tomorrow.

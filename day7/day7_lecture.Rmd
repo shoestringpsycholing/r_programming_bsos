@@ -1,0 +1,24 @@
+---
+title: "Day 7 Lecture"
+output: html_document
+---
+
+# Review HW 4
+
+# Review HW 5
+
+# Review Practice 6
+
+# Review HW 6
+
+# Other review
+
+# GitHub
+
+# GitHub Practice
+
+# Rest of the course
+  - `dplyr`
+  - functions
+  - special topics
+  - make-up time
