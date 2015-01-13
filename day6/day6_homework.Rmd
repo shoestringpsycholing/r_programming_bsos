@@ -13,4 +13,4 @@ output: html_document
 
 5. Copy that code chunk, and convert it into a loop, which will do what you want over all the groups, concatenating the results.
 
-6. Copy that loop again, and at a condition (`if`) statement to add some further control about ignoring some groups or some other conditional operation.
+6. Copy that loop again, and add a condition (`if`) statement to add some further control about ignoring some groups or some other conditional operation.
