@@ -7,7 +7,15 @@ output: html_document
   - sometimes faster (not always)
   - sometimes easier to think about (not always)
   - split-apply-combine
-  
+
+```{r}
+x <- 1:10
+
+x * 3
+
+```
+
+
 # The `apply` family
 
 ## `apply`
@@ -22,7 +30,7 @@ minpair <- read.csv("scottdata/CognitionPaperFinalData.csv")
 head(minpair)
 colnames(minpair)
 
-minpair$allmean <- apply(minpair[, 10:17], MARGIN = 1, mean)
+minpair$allmean <- apply(minpair[, 10:17], MARGIN = 1, FUN = mean)
 head(minpair)
 
 ```
@@ -58,6 +66,15 @@ head(minpair)
     - `daply()` = you give it a data frame, it gives you back an array
     - etc.
 
+```{r eval = FALSE}
+# library(plyr)
+my.function <- (chunk)
+
+results <- ddply(mydata, c("factor1", "factor1"), my.function)
+
+```
+
+
 ## `dplyr`
   - the most common usage for `plyr` is `ddply()` -- give it a data frame and get a data frame back
   - the `dplyr` package takes this and runs with it
@@ -69,8 +86,76 @@ head(minpair)
   
   - "verbs": `mutate`, `filter`, `select`, `summarise` (or `summarize`), `arrange`
   - use `group_by()` to set the groups over which something (like `summarize` will apply)
+  - `mutate` = "transform"
+  - `filter` = "get some of the rows"
+  - `select` = "get some of the columns"
+  - `summarise` = boil things down to some kind of summary
   
 ```{r}
+library(dplyr)
+minpair <- mutate(minpair, newcolumn = log(HiSegTok), anothercol = log(HiSegType))
+head(minpair)
+# the same as
+minpair$newcolumn <- log(minpair$HiSegTok)
+
+minpair.subset <- filter(minpair, Corpus != "Am", log(LoSegType) > -5) 
+summary(minpair)
+summary(minpair.subset)
+
+minpair.column.subset <- select(minpair, Corpus, Merged)
+head(minpair.column.subset)
+# only keep a stretch of columns
+minpair.column.subset <- select(minpair, AllMinPairs:WithinMinPairs)
+head(minpair.column.subset)
+# pull out a stretch of columnns
+minpair.column.subset <- select(minpair, -(AllMinPairs:WithinMinPairs))
+head(minpair.column.subset)
+minpair.column.subset <- select(minpair, Corpus:Merged, AllMinPairs:WithinMinPairs)
+head(minpair.column.subset)
+
+summarize(minpair, mymean = mean(HiSegTok), anothermean = mean(LoSegTok))
+# same as
+data.frame(mymean = mean(minpair$HiSegTok), anothermean = mean(minpair$LoSegTok))
+
+
+# group_by()
+minpair.grouped <- group_by(minpair, Corpus)
+nrow(minpair)
+nrow(minpair.grouped)
+head(minpair)
+head(minpair.grouped)
+# clean-up (sometimes, but rarely, needed)
+minpair.grouped.clean <- as.data.frame(minpair.grouped)
+head(minpair.grouped.clean)
+
+summarize(minpair.grouped, means = mean(HiSegTok))
+
+x <- 1:10
+y <- log(x)
+z <- sd(y)
+
+sd(log(1:10))
+
+1:10 %>% 
+  log %>% 
+  sd
+
+minpair %>% 
+  filter(WithinMinPairs > 2) %>%
+  group_by(Corpus) %>%
+  summarize(mean1 = mean(HiSegTok), mean2 = mean(LoSegTok))
+
+minpair %>% 
+  group_by(Corpus, Merged) %>%
+  summarize(mean1 = mean(HiSegTok), mean2 = mean(LoSegTok))
+  
+minpair %>% 
+  group_by(Corpus, Merged) %>%
+  summarize(mean1 = mean(HiSegTok), mean2 = mean(LoSegTok)) %>%
+  summarize(mean1 = mean(mean1), mean2 = mean(mean2))
+
+# You can mix these different modes of writing code
+sd(1:10 %>% log)
 
 
 

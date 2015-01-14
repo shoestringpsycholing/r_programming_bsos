@@ -6,14 +6,70 @@ output: html_document
 1. Start with this data:
 
 ```{r}
+library(dplyr)
+library(reshape2)
 minpair <- read.csv("scottdata/CognitionPaperFinalData.csv")
 ```
 
 2. Get the means of `WithinMinPairs` for each level of `Corpus`
 
+```{r}
+minpair %>%
+  group_by(Corpus) %>%
+  summarize(mean = mean(WithinMinPairs))
+
+# this is equivalent!
+summarize(group_by(minpair, Corpus), mean = mean(WithinMinPairs))
+
+# you can mix
+summarize(minpair %>% group_by(Corpus), mean = mean(WithinMinPairs))
+
+```
+
+
 3. Get cell means of `WithinMinPairs` by `Corpus` and `Merged`
+
+```{r}
+minpair %>%
+  group_by(Corpus, Merged) %>%
+  summarize(mean = mean(WithinMinPairs))
+```
 
 4. Melt down the last four columns, which are all frequency measures.  Get the min, max, and mean log values for all of these measures, by Corpus and Merged.
   - HINT: melt down the frequency columns first
-  
-5. Do the same as 4, but only where HiSegTok is greater than the median value for each language.
+
+```{r}
+minpair %>% 
+  melt(measure.vars = 14:17) %>%
+  group_by(variable, Corpus, Merged) %>%
+  summarize(minlog = min(log(value)), maxlog = max(log(value)), mean = mean(log(value)))
+```
+
+5. Do the same as 4, but only where HiSegTok is greater than the median value for each Corpus.
+
+```{r}
+step1 <- minpair %>% 
+  group_by(Corpus) %>%
+  summarize(medHST = median(HiSegTok))
+step1
+
+minpair.merged <- merge(step1, minpair)
+
+minpair %>% 
+  merge(step1) %>%
+  filter(HiSegTok > medHST) %>%
+  melt(measure.vars = 14:17) %>%
+  group_by(variable, Corpus, Merged) %>%
+  #summarize(minlog = min(log(value)), maxlog = max(log(value)), mean = mean(log(value))) %>%
+  xtabs(~ medHST + Corpus, data = .)
+
+minpair %>%
+  group_by(Corpus) %>%
+  mutate(medHST = median(HiSegTok)) %>%
+  filter(HiSegTok > medHST) %>%
+  melt(measure.vars = 14:17) %>%
+  group_by(variable, Corpus, Merged) %>%
+#  summarize(minlog = min(log(value)), maxlog = max(log(value)), mean = mean(log(value)))
+  xtabs(~ medHST + Corpus, data = .)
+
+```

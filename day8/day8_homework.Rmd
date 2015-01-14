@@ -7,4 +7,6 @@ output: html_document
 
 2. Find another kind of analysis/transformation/summary stat that you want to apply across multiple groups in your data. Use the functions from `reshape2` and `dplyr` to get these results.
 
-3. For one more practice, try another example of something like #2 (find another stat or grouping or something).
+3. For more practice, try another example of something like #2 (find another stat or grouping or something).
+
+4. Do yet another case of #2 above, but this time throw in a transformation, too.
