@@ -13,4 +13,48 @@ output: html_document
 
 5. Copy that code chunk, and convert it into a loop, which will do what you want over all the groups, concatenating the results.
 
+```{r}
+mynames <- c("a", "b", "c")
+
+for(name in mynames) {
+  print(name)
+  
+}
+
+
+```
+
+```{r}
+library(reshape2)
+setwd("~/R/Homework")
+mySP <- read.csv("../r_programming_bsos_working/homework/dippolito/SPTimePeriods.csv")
+head(mySP)
+results <- table(mySP$T3)
+head(results)
+
+mySP$RelID <- 1:nrow(mySP)
+mySP$RelID <- paste("Rel", 1:nrow(mySP), sep = "")
+head(mySP)
+mySP.melt <- melt(mySP, id.vars = c("RelID", "ID", "Relationship"), value.name = "relationship.type", variable.name = "time.period")
+summary(mySP.melt)
+head(mySP.melt)
+
+results <- table(mySP.melt$relationship.type)
+head(results)
+
+my.answer <- data.frame(time.period = rep(NA, length(levels(mySP.melt$time.period))), relationship.type = NA)
+for(this.loop in 1:length(levels(mySP.melt$time.period))) {
+  this.tp <- levels(mySP.melt$time.period)[this.loop]
+  mySP.subset <- mySP.melt[mySP.melt$time.period == this.tp, ]
+  rt <- table(mySP.subset$relationship.type)
+  this.answer <- data.frame(rt)
+  this.answer <- dcast(this.answer, . ~ Var1, value.var = "Freq")[, -1]
+  this.answer$time.period <- this.tp
+  my.answer[this.loop, ] <- this.answer[1, ]
+}
+my.answer
+
+```
+
+
 6. Copy that loop again, and add a condition (`if`) statement to add some further control about ignoring some groups or some other conditional operation.

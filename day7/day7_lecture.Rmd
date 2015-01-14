@@ -18,7 +18,7 @@ output: html_document
 # GitHub Practice
 
 # Rest of the course
-  - `dplyr`
+  - `dplyr` and `_apply` family
   - functions
   - special topics
   - make-up time

@@ -9,7 +9,20 @@ output: html_document
    - Try some different values for `binwidth` for the histogram.
    - Try some different values for `adjust` for the density plot.
 
+
+
 2. How does the distribution look?  Try transforming the variable and try to get it to look more normal (i.e., more Gaussian).  If it already looks normal, do something to it to make it look non-normal.
+
+
+```{r}
+minpair <- read.csv("scottdata/CognitionPaperFinalData.csv")
+head(minpair)
+library(ggplot2)
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram() # + geom_vline(xintercept = 1000, color = "red")
+
+```
+
+
 
 3. Is there a factor that you can use to break up this variable into groups of observations?  If not, reshape your data so that there is, or create a factor if necessary.  Then, do the following:
    - Plot it as a density plot, mapping `color` to the factor
@@ -17,24 +30,66 @@ output: html_document
    - Same, using `linetype` instead of `color`
    - Plot the data as a boxplot, with the factor as `x` and the numerical variable as `y`
 
+```{r}
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram(aes(fill = Corpus)) + scale_fill_brewer(palette = "Set1")
+
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram(aes(fill = Merged)) + scale_fill_manual(values = c("firebrick", rgb(27,158,119, maxColorValue = 255)))
+
+```
+
+
 4. Now let's look at breaking up a histogram across a factor.  With the same variables you used in #3:
    - Plot a histogram, but use faceting to display them, one above the other.
    - Try mapping the factor to `color` or `fill`, to see what that looks like.
    - Which one seems most useful or informative for your data, and why?
+
+```{r}
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram(aes(fill = Merged)) + facet_wrap(~ Corpus, ncol = 4)
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram(aes(fill = Merged)) + facet_grid(Merged ~ Corpus)
+
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram(aes(fill = Merged)) + facet_grid(Merged ~ .)
+
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram(aes(fill = Merged)) + facet_wrap(~ Merged, ncol = 1)
+
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_histogram(aes(fill = Merged)) + facet_wrap(~ Merged + Corpus)
+
+ggplot(minpair, aes(log(WithinMinPairs))) + geom_density(aes(fill = Merged), alpha = .3) + theme_minimal()
+
+```
+
+
 
 5. Now find two numerical variables.  You may need to reshape your data.  For example, if you have one numerical variable and a "condition" factor, you could use `dcast` to spread that variable across multiple columns (one per level of the factor).  Once you have two numerical variables:
    - Create a scatterplot, with one variable mapped to `x` and the other to `y`.
    - Plot a "loess" smoother on top of the scatterplot
    - Plot a regression line on top of the scatterplot (instead of the loess)
 
+```{r}
+ggplot(minpair, aes(log(WithinMinPairs + 1), log(BetweenMinPairs + 1))) + geom_point() + geom_smooth()
+
+```
+
+
 6. Are there any other factors that split up the variable plotted in #5?  If so try the following:
    - Map the factor to `color`
    - Facet by the factor
 
+
+```{r}
+ggplot(minpair, aes(log(WithinMinPairs + 1), log(BetweenMinPairs + 1), color = Merged)) + geom_point() + geom_smooth()
+
+ggplot(minpair, aes(log(WithinMinPairs + 1), log(BetweenMinPairs + 1), color = Merged)) + geom_point() + geom_smooth() + facet_wrap(~ Merged)
+
+```
+
+
 7. Output all of the plots above as a single PDF.
+
+
 
 8. Is there a better type of visualization for your data?  What numbers would you like to be able to visualize better?  Be as explicit as possible, and write some "pseudo-code" to ilustrate what you think you would like.
 
 9. Save your Markdown document that answers all of these questions (with code) as well as your PDF, and commit them as changes to your git homework repository.  Push those changes to GitHub by Monday morning at 9am.
+
 
 

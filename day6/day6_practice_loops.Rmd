@@ -23,6 +23,11 @@ myris.virginica <- myris[myris$Species == "virginica", ]
 myris.virginica.melt <- melt(myris.virginica, measure.vars = 1:4)
 my.answer <- dcast(myris.virginica.melt, Species ~ variable, value = "value", fun.aggregate = mean)
 
+library(ggplot2)
+pdf("virginicaplot.pdf")
+ggplot(myris.virginica, aes(Sepal.Width, Petal.Width)) + geom_point()
+dev.off()
+
 ```
 
 2. Now make a copy of this code and turn it into a loop:
@@ -59,6 +64,7 @@ for(this.loop in 1:length(levels(myris$Species))) {
 }
 
 
+
 ```
 
 
@@ -86,11 +92,12 @@ for(this.loop in 1:length(levels(myris$Species))) {
   sw <- mean(myris.subset$Sepal.Width)
   pl <- mean(myris.subset$Petal.Length)
   pw <- mean(myris.subset$Petal.Width)
-  if(pw >= 1) {
+  if(is.finite(pw) & pw >= 1) {
     my.answer[this.loop, ] <- list(this.species, sl, sw, pl, pw)
   }
 }
 
+# ?break
 
 ```
 

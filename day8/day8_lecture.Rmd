@@ -1,0 +1,78 @@
+---
+title: "Day 8 Lecture"
+output: html_document
+---
+
+# Vectorization overview
+  - sometimes faster (not always)
+  - sometimes easier to think about (not always)
+  - split-apply-combine
+  
+# The `apply` family
+
+## `apply`
+
+- good for "row-wise" operations over data frames (or column-wise)
+- give it only the columns/rows you want to operate on
+- the `MARGIN` argument says whether it's row-wise (=1) or column-wise (=2)
+- the `FUN` argument says what to do with each row/column-wise vector
+
+```{r}
+minpair <- read.csv("scottdata/CognitionPaperFinalData.csv")
+head(minpair)
+colnames(minpair)
+
+minpair$allmean <- apply(minpair[, 10:17], MARGIN = 1, mean)
+head(minpair)
+
+```
+
+## other members of the `apply` family
+  - generally avoid, if possible!
+
+### `lapply`
+  - "list" apply
+  - does something to each member of a list/vector
+  - returns a list
+
+### `tapply`
+  - "table" apply
+  - does something to data in "cells" by a combination of factors
+  - returns a table
+
+### `sapply`
+  - "simple" apply
+  - returns a vector
+  - usually what you want instead of `lapply`
+
+# A better way: `plyr` and `dplyr`
+  - best for data frames
+  
+## `plyr`
+  - the `plyr` package is older, slower, not under very active development
+  - instantiates a "split-apply-combine" philosophy
+  - handy paper here: http://www.jstatsoft.org/v40/i01
+  - series of related functions
+    - XYply, where X = "thing you give it" and Y = "thing it gives you back"
+    - `ldply()` = you give it a list, it gives you back a data frame
+    - `daply()` = you give it a data frame, it gives you back an array
+    - etc.
+
+## `dplyr`
+  - the most common usage for `plyr` is `ddply()` -- give it a data frame and get a data frame back
+  - the `dplyr` package takes this and runs with it
+  - DON'T library both packages in the same session (unless you really need to and know what you're doing)
+  - `dplyr` is implemented to be much faster
+  - `dplyr` is the future...
+  
+### `dplyr` usage
+  
+  - "verbs": `mutate`, `filter`, `select`, `summarise` (or `summarize`), `arrange`
+  - use `group_by()` to set the groups over which something (like `summarize` will apply)
+  
+```{r}
+
+
+
+```
+

@@ -7,19 +7,59 @@ output: html_document
 
 2. List ALL the issues you can see where it looks like your data is being read in a weird way.  If your data looks perfect, find some way to mess it up :-)
 
+```{r}
+# colA and colB are "complementary" (one has NA where the other has value)
+mydata <- data.frame(colA = c(NA, 1, 2, NA, NA, 78), colB = c(45, NA, NA, 2, 99, 23))
+mydata
+mydata$colC <- mydata$colA
+mydata$colC[is.na(mydata$colC)]
+
+mydata$colC[is.na(mydata$colA)] <- mydata$colB[is.na(mydata$colA)]
+mydata
+
+```
+
 3. Pick one or two of the most egregious or problematic of the issues in #2 and fix them.
 
 4. Check for NAs, and report where you see them (try to pinpoint where they are, not just "5 NAs in column seven".
 
+```{r}
+mydata <- data.frame(colA = c(NA, 1, 2, 3, NA, 78), colB = c(45, NA, NA, 2, 99, 23))
+mydata
+complete.cases(mydata)
+mydata[!complete.cases(mydata), ]
+which(!complete.cases(mydata))
+
+
+```
+
+
 5. Decide what you think you should do about the NAs, and say why.  If you can, try to implement this decision.
+
+
 
 6. Remove any problematic rows and/or columns.  Say why you want to remove them.  If there aren't any problems, describe why you think there are no problems.
 
 7. Re-code at least one factor.  Provide a table that shows the correspondence between old levels and new levels.
+
+
 
 8. Run TWO DIFFERENT simple analyses or statistical tests, such as linear regression (`lm()`), logistic regression (`glm()`), correlation test (`cor.test()`), t-test (`t.test()`), or non-parametric tests (e.g., `wilcox.test()`).  For each of these:
   - Describe why you are doing this analysis, i.e., what question is it answering?
   - I won't judge you on statistical expertise!  (though I will make comments if I think I can be helpful)
   - Report some key statistics from the analysis, using inline code
   
+  
+```{r}
+minpair <- read.csv("scottdata/CognitionPaperFinalData.csv")
+head(minpair)
+my.anova <- aov(WithinMinPairs ~ Merged, data = minpair)
+my.summary <- summary(my.anova)
+names(my.summary)
+str(my.summary)
+class(my.summary)
+str(my.summary[[1]])
+my.summary[[1]]$"F value"[1]
+```
+
   

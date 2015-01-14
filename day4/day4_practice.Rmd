@@ -106,6 +106,8 @@ p.value <- mysummary$coefficients["WithinMinPairs", "Pr(>|z|)"]
 
 ```
 
+
+
 The estimate for the WithinMinPairs coefficient was `r round(est, 4)`, with a standard error of `r round(std.err, 4)` and a p of `r round(p.value, 3)`.
 
 EXTRA CREDIT: figure out how to display the above results with only a few decimal places
