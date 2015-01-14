@@ -1,0 +1,19 @@
+---
+title: "Day 8 Practice"
+output: html_document
+---
+
+1. Start with this data:
+
+```{r}
+minpair <- read.csv("scottdata/CognitionPaperFinalData.csv")
+```
+
+2. Get the means of `WithinMinPairs` for each level of `Corpus`
+
+3. Get cell means of `WithinMinPairs` by `Corpus` and `Merged`
+
+4. Melt down the last four columns, which are all frequency measures.  Get the min, max, and mean log values for all of these measures, by Corpus and Merged.
+  - HINT: melt down the frequency columns first
+  
+5. Do the same as 4, but only where HiSegTok is greater than the median value for each language.
