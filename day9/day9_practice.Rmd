@@ -1,0 +1,25 @@
+---
+title: "Day 9 Practice"
+output: html_document
+---
+
+1. Use the following data:
+
+```{r}
+miris <- iris
+set.seed(42)
+for(col in 1:4) {
+  miris[sample(nrow(miris), 20, replace = FALSE), col] <- NA
+}
+
+```
+
+2. Write a function that will:
+  - take a vector of numbers as input
+  - return the log of the largest non-NA value
+  - Try this out on a vector that you make up
+  
+  
+3. Run this function over rows of the data from #1
+
+4. Write a function that will get the standard error of a vector of numbers. Use that function to get a standard error for each measure for each Species in the data from #1 (ignoring NAs)

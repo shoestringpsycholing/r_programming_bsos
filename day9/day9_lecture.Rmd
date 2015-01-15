@@ -1,0 +1,103 @@
+---
+title: "Day 9 Lecture"
+output: html_document
+---
+
+# HW 8 Review
+
+# Special Topics
+  - topic selection
+  - make-up timing
+
+# Functions
+  - making a function
+  - anonymous functions
+  - environments
+  - making functions available
+  - debugging
+
+## Function basics
+  - basic syntax very simple!
+
+```{r eval = FALSE}
+my.function <- function(arg1, arg2, ...) {
+  #FUNCTION BODY  
+}
+
+```
+
+  - "anonymous" functions = "one-use" functions
+  
+```{r}
+library(reshape2)
+library(dplyr)
+mysleep <- sleep
+levels(mysleep$group) <- c("pre", "post")
+mysleep.wide <- dcast(mysleep, ID ~ group, value.var = "extra")
+mysleep.wide
+
+double.max <- function(x) {
+  output <- max(x) * 2
+  output
+}
+
+mysleep.wide$newcol <- apply(mysleep.wide[, 2:3], 1, double.max)
+mysleep.wide
+
+# anonymous
+mysleep.wide$newcol2 <- apply(mysleep.wide[, 2:3], 1, function(x) { max(x) * 2 })
+mysleep.wide
+
+# dplyr
+mysleep.wide <- 
+  mysleep.wide %>%
+  rowwise() %>%
+  mutate(newcol3 = double.max(c(pre, post))) # or newcol3 = max(pre, post) * 2
+mysleep.wide
+
+# dplyr with melt (good for lots of columns)
+mysleep.wide %>%
+  melt(measure.vars = 2:3) %>%
+  group_by(ID) %>%
+  mutate(newcol4 = double.max(value)) %>%
+  dcast(ID + newcol + newcol2 + newcol3 + newcol4 ~ variable, value.var = "value")
+
+# using `get()`
+mysleep.wide %>%
+  rowwise() %>%
+  mutate(newcol5 = double.max(get(c("pre", "post")))) 
+
+
+```
+
+## Environments
+  - R can look "up" through environments, but not "down"
+  - the body of a function is an environment, nested under the environment where it is called
+
+## Making functions available
+  - in the notebook/script
+  - `source()`
+  - package!
+    - some package-making tutorials:
+      - http://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/
+      - http://r-pkgs.had.co.nz/
+      - https://support.rstudio.com/hc/en-us/articles/200486488-Developing-Packages-with-RStudio
+      - http://cran.r-project.org/doc/contrib/Leisch-CreatingPackages.pdf
+      - and lots more
+
+## Debugging
+  - run as a non-function
+  - insert "test" code
+  - use `browser()`, `debug()`, and `undebug()`
+  
+```{r}
+mysleep <- sleep
+
+my.analysis <- function(x) {
+
+}
+```
+
+
+# Practice
+

@@ -1,0 +1,15 @@
+---
+title: "Day 9 Homework"
+output: html_document
+---
+
+1. Write a function to do a bunch of clean-up and formatting to your data.
+
+2. Make sure this function works on your data.
+
+3. Get some subset of your data, or find a similar-but-not-identical data set.  Change up the column order.  Re-run your function on this new data.  Does it work?
+
+4. Fix your function to be able to work on the new data.
+
+5. Write a function to do some kind of summary stat, and use the `dplyr` functions to run this function over groups of your data.
+
