@@ -1,0 +1,12 @@
+---
+title: "Day 9 Image Try"
+output: html_document
+---
+
+Is this image showing up?
+
+![picture of a guy with an apple in front of his face](magritte_appleface.jpg)
+
+Here's another
+
+<img src="magritte_appleface.jpg" />

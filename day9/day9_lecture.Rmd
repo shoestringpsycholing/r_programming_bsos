@@ -37,9 +37,19 @@ mysleep.wide <- dcast(mysleep, ID ~ group, value.var = "extra")
 mysleep.wide
 
 double.max <- function(x) {
-  output <- max(x) * 2
+  output <- max(x) * 2  
   output
 }
+
+double.max <- function(x) {
+  max(x) * 2  
+}
+
+#double.max <- function(x) { max(x) * 2 }
+#double.max <- function(x) max(x) * 2 
+
+
+double.max(1:10)
 
 mysleep.wide$newcol <- apply(mysleep.wide[, 2:3], 1, double.max)
 mysleep.wide
@@ -62,11 +72,6 @@ mysleep.wide %>%
   mutate(newcol4 = double.max(value)) %>%
   dcast(ID + newcol + newcol2 + newcol3 + newcol4 ~ variable, value.var = "value")
 
-# using `get()`
-mysleep.wide %>%
-  rowwise() %>%
-  mutate(newcol5 = double.max(get(c("pre", "post")))) 
-
 
 ```
 
@@ -74,9 +79,33 @@ mysleep.wide %>%
   - R can look "up" through environments, but not "down"
   - the body of a function is an environment, nested under the environment where it is called
 
+```{r}
+double.max <- function(x) {
+  output <- max(x) * 2  
+  print(environment())
+  cat("\nThis is an awesome function\n")
+  print(output)
+  return(NULL)
+}
+
+double.max <- function(x) {
+  output <- max(x) * 2
+  y <- 6
+  output
+}
+
+```
+
+
 ## Making functions available
   - in the notebook/script
   - `source()`
+    - runs all code in another file
+
+```{r}
+source("day9/anotherfunction.R")
+```
+
   - package!
     - some package-making tutorials:
       - http://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/
@@ -91,11 +120,190 @@ mysleep.wide %>%
   - use `browser()`, `debug()`, and `undebug()`
   
 ```{r}
+my.analysis <- function() {
+  library(dplyr)
+  if(require(mice)) {
+    print("run mice code")
+  } else {
+    print("run some alternative code")
+  }   
+}
+
+my.analysis2 <- function() {
+  library(dplyr)
+  if(library(mice)) {  # throws an error
+    print("run mice code")
+  } else {
+    print("run some alternative code")
+  }   
+}
+
+
 mysleep <- sleep
 
-my.analysis <- function(x) {
-
+my.pvals.v1 <- function(data) {
+  test.results <- t.test(extra ~ group, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output
 }
+
+my.pvals.v1(mysleep)
+mysleep2 <- mysleep[-c(3, 17), ]
+my.pvals.v1(mysleep2)
+mysleep3 <- mysleep
+colnames(mysleep3) <- c("time.sleep", "condition", "subject")
+my.pvals.v1(mysleep3)
+
+my.pvals.v2 <- function(data, DV, factor) {
+  test.results <- t.test(DV ~ factor, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output
+}
+
+my.pvals.v2(mysleep3, DV = "time.sleep", factor = "condition")
+
+
+
+```
+
+### "fake function" debugging
+
+```{r}
+my.pvals.v2(mysleep3, DV = "time.sleep", factor = "condition")
+
+my.pvals.v2 <- function(data, DV, factor) {
+  
+  data <- mysleep3
+  DV <- "time.sleep"
+  factor <- "condition"
+  
+  test.results <- t.test(DV ~ factor, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output
+  
+  
+  
+}
+
+
+
+```
+
+### insert "print" statements
+
+
+```{r}
+my.pvals.v2(mysleep3, DV = "time.sleep", factor = "condition")
+
+my.pvals.v2 <- function(data, DV, factor) {
+  print(DV)
+  test.results <- t.test(DV ~ factor, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output
+  
+  
+  
+}
+
+
+```
+
+### with debugging utilities
+  - `browser()`
+  - `debug()`, `undebug()`
+
+```{r}
+my.pvals.v2(mysleep3, DV = "time.sleep", factor = "condition")
+
+my.pvals.v2 <- function(data, DV, factor) {
+  #browser()
+  test.results <- t.test(DV ~ factor, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output  
+}
+
+debug(my.pvals.v2)
+undebug(my.pvals.v2)
+
+my.pvals.v3 <- function(data, my.formula) {
+  #browser()
+  test.results <- t.test(my.formula, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output  
+}
+
+my.pvals.v3(mysleep3, time.sleep ~ condition)
+
+my.pvals.v4 <- function(data, DV, factor) {
+  formula.string <- paste(DV, "~", factor)
+  my.formula <- as.formula(formula.string)
+  test.results <- t.test(my.formula, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output  
+}
+
+my.pvals.v4(mysleep3, DV = "time.sleep", factor = "condition")
+
+
+```
+
+### dealing with user error
+
+``` {r}
+my.pvals.v4 <- function(data, DV, factor) {
+  if(!is.data.frame(data)) {
+    stop("Please supply a data frame, dear user") # can use warning() as well, does not throw error
+  }
+  formula.string <- paste(DV, "~", factor)
+  my.formula <- as.formula(formula.string)
+  test.results <- t.test(my.formula, data = data)
+  pval <- test.results$p.value
+  if (pval < .05) {
+    output <- "p < .05, significant, thank god"
+  } else {
+    output <- paste("dammit, p is =", round(pval, 3))
+  }
+  output  
+}
+
+my.pvals.v4(as.matrix(mysleep3), DV = "time.sleep", factor = "condition")
+
+
 ```
 
 
