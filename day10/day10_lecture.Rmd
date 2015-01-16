@@ -3,6 +3,8 @@ title: "Day 10 Lecture"
 output: html_document
 ---
 
+# Practice 9 and HW 9 review
+
 # Simulations
 What do we mean by "simulations"?
   1. Generate some data
@@ -47,7 +49,7 @@ ggplot(norm.data2, aes(scale(x))) + geom_histogram() # the defaults for `scale()
 ```{r}
 library(MASS)
 
-cor.data <- mvrnorm(n = 100, mu = c(0, 0), Sigma = matrix(c(1, .5, .5, 1), nrow = 2))
+cor.data <- mvrnorm(n = 100, mu = c(0, 0), Sigma = matrix(c(1, .5, .5, 1), nrow = 2),  empirical = FALSE)
 
 
 simA <- function(k = 20, n.cond = 2) {
@@ -61,12 +63,13 @@ simA <- function(k = 20, n.cond = 2) {
   t3.p <- t.test(DV12 ~ condition, this.data)$p.value
   return(c(t1.p, t2.p, t3.p))
 }
-  
-system.time(sims <- replicate(10000, simA()))
 
-sim.results <- data.frame(t1 = rep(NA, 10000), t2 = NA, t3 = NA)
+set.seed(42)
+system.time(sims <- replicate(1000, simA()))
+
+sim.results <- data.frame(t1 = rep(NA, 1000), t2 = NA, t3 = NA)
 # sim.results <- data.frame(t1 = NA, t2 = NA, t3= NA)  # slower
-system.time(for(i in 1:10000) {
+system.time(for(i in 1:1000) {
   sim.run <- simA()
   sim.results[i, ] <- sim.run
 })
@@ -117,7 +120,12 @@ summary(sleep.lm)
 anova(sleep.lm)
 t.test(extra ~ group, data = mysleep, var.equal = TRUE)
 
-sleep.sims <- simulate(sleep.lm, 10000)
+sleep.sims <- simulate(sleep.lm, 2)
+sleep.sims$group <- mysleep$group
+sleep.sims
+
+t.test(sim_2 ~ group, data = sleep.sims, var.equal = TRUE)
+
 
 for(i in 1:ncol(sleep.sims)) {
     

@@ -1,0 +1,12 @@
+---
+title: "Day 10 Homework"
+output: html_document
+---
+
+1. Find some relationship in your data (e.g., correlation, comparison of means, etc.) that is "significant" (don't worry too much about what that might mean).
+
+2. Get an estimate of the effect size (e.g., the difference between means, or the correlation).
+
+3. Simulate data with this effect size (either using mvrnorm or adding a simulated effect), but with a much smaller data sample.  In other words, simulate an underpowered study.
+
+4. Examine the amount of effect-size inflation via the "significance filter" by looking at the effect sizes from the simulations, for just the sims where the effect turned out significant.

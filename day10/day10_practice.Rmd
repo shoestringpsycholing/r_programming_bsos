@@ -7,8 +7,108 @@ Let's try to simulate the impact of the "file drawer" problem on effect-size est
 
 1. First, simulate data with 100 observations of two variables that are correlated at .3.
 
+```{r}
+mydata <- mvrnorm(n = 100, mu = c(0, 0), Sigma = matrix(c(1, .3, .3, 1), nrow = 2), empirical = TRUE)
+
+```
+
+
 2. Run a cor.test and get a p-value.
+
+```{r}
+mycor <- cor.test(mydata[, 1], mydata[, 2])
+pval <- mycor$p.value
+```
+
 
 3. Now run simulations with very low power (like 10 or 20 observations).  For each simulation, record both the correlation and the p-value of the cor.test.
 
+```{r}
+nsim <- 1000
+
+results.table <- data.frame(cor = rep(NA, nsim), pval = NA)
+
+for(i in 1:nsim) {
+  simdata <- mvrnorm(n = 10, mu = c(0, 0), Sigma = matrix(c(1, .3, .3, 1), nrow = 2), empirical = FALSE)
+  simcor.test <- cor.test(simdata[, 1], simdata[, 2])
+  simcor <- simcor.test$estimate
+  pval <- simcor.test$p.value
+  results.table[i, ] <- c(simcor, pval)
+}
+
+
+```
+
+
 4. Check to see what the distribution of correlations are, only for the runs where p < .05.
+
+```{r}
+alpha <- .05
+
+results.sig <- filter(results.table, pval < alpha)
+library(ggplot2)
+ggplot(results.table, aes(cor)) + geom_histogram()
+ggplot(results.table, aes(pval)) + geom_histogram()
+
+ggplot(results.sig, aes(cor)) + geom_histogram()
+
+results.table$significant <- results.table$pval < alpha
+ggplot(results.table, aes(cor)) + geom_histogram(aes(fill = significant)) + scale_fill_brewer(palette = "Set1") + geom_vline(xintercept = .3, linetype = 2)
+
+```
+
+ADDITIONAL EXAMPLE: t-test
+
+1. First, simulate data with 1000 observations of one variable, plus a positive "effect" with a smallish effect size
+
+```{r}
+mydata <- data.frame(x = rnorm(100), effect = rnorm(100, mean = .3))
+mydata$y <- apply(mydata, 1, sum)
+```
+
+2. Run a (paired) t.test and get a p-value.
+
+```{r}
+mytest <- t.test(mydata$y, mydata$x, paired = TRUE)
+pval <- mytest$p.value
+```
+
+
+3. Now run simulations with very low power (like 10 or 20 observations).  For each simulation, record both the correlation and the p-value of the cor.test.
+
+```{r}
+nsim <- 1000
+
+results.table2 <- data.frame(diff = rep(NA, nsim), pval = NA)
+
+for(i in 1:nsim) {
+  mydata <- data.frame(x = rnorm(10), effect = rnorm(10, mean = .3))
+  mydata$y <- apply(mydata, 1, sum)
+  simtest <- t.test(mydata$y, mydata$x, paired = TRUE)
+  simdiff <- simtest$estimate
+  pval <- simtest$p.value
+  results.table2[i, ] <- c(simdiff, pval)
+}
+
+
+```
+
+
+4. Check to see what the distribution of correlations are, only for the runs where p < .05.
+
+```{r}
+alpha <- .05
+results.sig2 <- filter(results.table2, pval < alpha)
+library(ggplot2)
+ggplot(results.table2, aes(diff)) + geom_histogram()
+ggplot(results.table2, aes(pval)) + geom_histogram()
+
+ggplot(results.sig2, aes(diff)) + geom_histogram()
+
+results.table2$significant <- results.table2$pval < alpha
+ggplot(results.table2, aes(diff)) + geom_histogram(aes(fill = significant)) + scale_fill_brewer(palette = "Set1") + geom_vline(xintercept = .3, linetype = 2)
+
+ggplot(results.table2, aes(diff)) + geom_histogram(aes(fill = significant)) + scale_fill_brewer(palette = "Set1") + geom_vline(xintercept = .3, linetype = 2) + facet_grid(significant ~ .)
+
+```
+
