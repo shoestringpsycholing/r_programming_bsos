@@ -5,6 +5,19 @@ output: html_document
 
 1. Write a function to do a bunch of clean-up and formatting to your data.
 
+```{r}
+
+miris <- iris
+
+myfunc <- function(data, colname) {
+  library(dplyr)
+  output <- filter(data, data[, colname] == "setosa")
+  output
+  }
+
+```
+
+
 2. Make sure this function works on your data.
 
 3. Get some subset of your data, or find a similar-but-not-identical data set.  Change up the column order.  Re-run your function on this new data.  Does it work?
@@ -12,4 +25,20 @@ output: html_document
 4. Fix your function to be able to work on the new data.
 
 5. Write a function to do some kind of summary stat, and use the `dplyr` functions to run this function over groups of your data.
+
+```{r eval=FALSE}
+
+myfunc <- function(data = mydata, column = "variable")
+
+mydata[, column]
+
+x <- 1:10
+myvar <- "x"
+get(myvar)
+
+paste("var", 1:10, sep = "")
+
+
+
+```
 

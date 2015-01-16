@@ -6,6 +6,8 @@ output: html_document
 1. Use the following data:
 
 ```{r}
+library(dplyr)
+library(reshape2)
 miris <- iris
 set.seed(42)
 for(col in 1:4) {
@@ -29,6 +31,8 @@ myfunc <- function(x) {
 myfunc(1:10)
 myfunc(c(2, 10, 3, 4.1))
 myfunc(c(2, 10, 3, 14.1))
+myfunc(c(2, 10, NA, 14.1))
+
 
 ```
 
@@ -39,9 +43,16 @@ myfunc(c(2, 10, 3, 14.1))
 miris$result <- apply(miris[, 1:4], 1, myfunc)
 
 # dplyr way
-miris <- miris %>%
-  rowwise() %>%
+miris <- miris %>% 
+  rowwise() %>% 
   mutate(result2 = myfunc(c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)))
+
+# loop way
+for(counter in 1:nrow(miris)) {
+  result <- myfunc(miris[counter, 1:4])
+  miris$newcolumn[counter] <- result
+}
+
 
 ```
 
@@ -63,7 +74,18 @@ std.err <- function(x, ignore.na = TRUE) {
 miris %>% 
   melt(id.vars = "Species") %>%
   group_by(Species, variable) %>%
-  summarize(SE = std.err(value))
+  summarize(SE = std.err(value)) %>%
+  dcast(Species ~ variable, value.var = "SE")
+
+# loop
+results.table <- data.frame(Species = levels(miris$Species), Sepal.Length = NA, Sepal.Width = NA, Petal.Length = NA, Petal.Width = NA)
+for(species in levels(miris$Species)) {
+  miris.sub <- filter(miris, Species == species)
+  for(col in c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")) {
+    this.answer <- std.err(miris.sub[, col])
+    results.table[results.table$Species == species, col] <- this.answer
+  }
+}
 
 ```
 
