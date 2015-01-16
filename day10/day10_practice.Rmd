@@ -1,0 +1,14 @@
+---
+title: "Day 10 Practice"
+output: html_document
+---
+
+Let's try to simulate the impact of the "file drawer" problem on effect-size estimates.
+
+1. First, simulate data with 100 observations of two variables that are correlated at .3.
+
+2. Run a cor.test and get a p-value.
+
+3. Now run simulations with very low power (like 10 or 20 observations).  For each simulation, record both the correlation and the p-value of the cor.test.
+
+4. Check to see what the distribution of correlations are, only for the runs where p < .05.

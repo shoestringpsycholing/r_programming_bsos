@@ -1,0 +1,131 @@
+---
+title: "Day 10 Lecture"
+output: html_document
+---
+
+# Simulations
+What do we mean by "simulations"?
+  1. Generate some data
+  2. Do some analysis
+  3. Repeat! (a lot, usually)
+
+# Important functions
+   - distribution functions
+    - e.g., `rnorm()`
+   - mvrnorm
+   - replicate
+   - simulate
+   - sims via loop
+   - system.time
+
+# Distributions
+
+```{r}
+# ?Distributions
+
+norm.d <- data.frame(x = seq(-3, 3, .05))
+norm.d$y <- dnorm(norm.d$x)
+library(ggplot2)
+ggplot(norm.d, aes(x, y)) + geom_line()
+2*(1 - pnorm(1.96))  # get p-value
+qnorm(.975)          # get critical value for some p
+
+norm.data <- data.frame(x = rnorm(10000))
+head(norm.data)
+ggplot(norm.data, aes(x)) + geom_histogram()
+
+norm.data2 <- data.frame(x = rnorm(10000, mean = 20, sd = 10))
+head(norm.data2)
+ggplot(norm.data2, aes(x)) + geom_histogram()
+ggplot(norm.data2, aes(scale(x))) + geom_histogram() # the defaults for `scale()` normalize the vector
+
+```
+
+
+# Running some simulations
+
+```{r}
+library(MASS)
+
+cor.data <- mvrnorm(n = 100, mu = c(0, 0), Sigma = matrix(c(1, .5, .5, 1), nrow = 2))
+
+
+simA <- function(k = 20, n.cond = 2) {
+  dvs <- mvrnorm(n = k*n.cond, mu = c(0,0), Sigma = matrix(c(1, .5, .5, 1), nrow = 2))
+  this.data <- cbind(data.frame(condition = c(rep("A", k), rep("B", k))), dvs)
+  colnames(this.data) <- c("condition", "DV1", "DV2")
+  this.data$DV12 <- apply(this.data[, c("DV1", "DV2")], 1, mean)
+
+  t1.p <- t.test(DV1 ~ condition, this.data)$p.value
+  t2.p <- t.test(DV2 ~ condition, this.data)$p.value
+  t3.p <- t.test(DV12 ~ condition, this.data)$p.value
+  return(c(t1.p, t2.p, t3.p))
+}
+  
+system.time(sims <- replicate(10000, simA()))
+
+sim.results <- data.frame(t1 = rep(NA, 10000), t2 = NA, t3 = NA)
+# sim.results <- data.frame(t1 = NA, t2 = NA, t3= NA)  # slower
+system.time(for(i in 1:10000) {
+  sim.run <- simA()
+  sim.results[i, ] <- sim.run
+})
+
+sims <- t(sims)
+  
+sims.df <- as.data.frame(sims)
+nrow(sims.df[sims.df$V1 < .05, ])/nrow(sims.df)
+nrow(sims.df[sims.df$V2 < .05, ])/nrow(sims.df)
+nrow(sims.df[sims.df$V3 < .05, ])/nrow(sims.df)
+sims.df$sig <- apply(sims.df, 1, function(x) any(x < .05))
+nrow(sims.df[sims.df$sig, ])/nrow(sims.df)
+  
+simB <- function(k = 20, k.plus = 10) {
+  dvs <- mvrnorm(n = (k+k.plus)*2, mu = c(0,0), Sigma = matrix(c(1, .5, .5, 1), nrow = 2))
+  this.data <- cbind(data.frame(condition = c(rep("A", k+k.plus), rep("B", k+k.plus)), dataset = c(rep("base", k), rep("extra", k.plus), rep("base", k), rep("extra", k.plus))), dvs)
+  colnames(this.data) <- c("condition", "dataset", "DV1", "DV2")
+  this.data$DV12 <- apply(this.data[, c("DV1", "DV2")], 1, mean)
+
+  t1base.p <- t.test(DV1 ~ condition, this.data[this.data$dataset == "base", ])$p.value
+  t1extra.p <- t.test(DV1 ~ condition, this.data)$p.value
+  t2base.p <- t.test(DV2 ~ condition, this.data[this.data$dataset == "base", ])$p.value
+  t2extra.p <- t.test(DV2 ~ condition, this.data)$p.value
+  t12base.p <- t.test(DV12 ~ condition, this.data[this.data$dataset == "base", ])$p.value
+  t12extra.p <- t.test(DV12 ~ condition, this.data)$p.value
+  return(c(t1base.p, t1extra.p, t2base.p, t2extra.p, t12base.p, t12extra.p))
+}
+  
+system.time(sims <- replicate(15000, simB()))
+  
+sims <- t(sims)
+  
+sims.df <- as.data.frame(sims)
+nrow(sims.df[sims.df$V1 < .05, ])/nrow(sims.df)
+nrow(sims.df[sims.df$V2 < .05, ])/nrow(sims.df)
+nrow(sims.df[sims.df$V3 < .05, ])/nrow(sims.df)
+sims.df$sigB1 <- apply(sims.df[, 1:2], 1, function(x) any(x < .05))
+nrow(sims.df[sims.df$sigB1, ])/nrow(sims.df)
+sims.df$sigB1 <- apply(sims.df[, 1:6], 1, function(x) any(x < .05))
+nrow(sims.df[sims.df$sigB1, ])/nrow(sims.df)
+
+```
+
+```{r}
+mysleep <- sleep
+sleep.lm <- lm(extra ~ group, data = mysleep)
+summary(sleep.lm)
+anova(sleep.lm)
+t.test(extra ~ group, data = mysleep, var.equal = TRUE)
+
+sleep.sims <- simulate(sleep.lm, 10000)
+
+for(i in 1:ncol(sleep.sims)) {
+    
+}
+
+
+
+
+
+```
+
