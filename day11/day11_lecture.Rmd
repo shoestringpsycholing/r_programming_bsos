@@ -38,9 +38,12 @@ Some handy characters to know:
   - `^` = the "beginning edge" of a string
   - `$` = the "ending edge" of a string
   - {n} = the preceding character is matched n times
-  
+
+### basic matching
+
 ```{r}
 response.types <- c("(1) strong dispreference", "(2) mild dispreference", "(3) no preference", "(4) mild preference", "(5) strong preference", "(9) don't know")
+set.seed(89)
 stringdata <- data.frame(ID = rep(paste("subject", 1:100), each = 4), 
                          condition = rep(c("small_slow", "small_fast", 
                                            "big_slow", "big_fast"), 100),
@@ -55,9 +58,139 @@ stringdata <- data.frame(ID = rep(paste("subject", 1:100), each = 4),
 head(stringdata)
 summary(stringdata)
 
+x <- c("here", "is", "a", "string", "vector")
+grep("v", x)
+grep("i", x)
+
+grepl("i", x)
+
+# find rows with subject 12
+grep("subject 12", stringdata$ID)
+grep("12", stringdata$ID)
+which(stringdata$ID == "subject 12")
+
+# find all rows where the response was "mild"
+grep("mild", stringdata$response)
+
+# find all rows where condition has "small"
+grep("small", stringdata$condition)
+
+colnames(stringdata)
+
+apply(stringdata, 2, function(x) grep("small", x))
+
+
 
 
 ```
+
+### substitutions
+
+```{r}
+
+x <- "hello there"
+gsub("ll", "", x)
+gsub("l", "p", x)
+gsub("e", "something else", x)
+sub("e", "something else", x)
+
+y <- "condition 58"
+gsub("condition ", "", y)
+as.numeric(gsub("condition ", "", y))
+
+z <- c("c 58", "n 47", "o 83", "d 502", "number 3", "my num 42")
+gsub("\\w ", "", z)
+gsub("\\w+ ", "", z)
+sub("\\w+ ", "", z)
+
+# backreferences
+gsub("\\w+ \\d+", "all", z) 
+gsub("\\w+ \\d+", "all", z) 
+gsub("(\\w+ )+\\d+", "all", z) 
+
+gsub("(\\w+ )+(\\d+)", "\\2", z) 
+gsub("(\\w+\\s)+(\\d+)", "\\2", z) 
+
+# return just the first part of the condition variable
+gsub("(\\w+)_(\\w+)", "\\1", stringdata$condition)
+
+# return the ID column without the space
+gsub("(\\w+)\\s(\\d+)", "\\1\\2", stringdata$ID)
+gsub("\\s", "", stringdata$ID)
+
+stringdata2 <- stringdata
+stringdata2$ID <- as.character(stringdata2$ID)
+stringdata2$ID[5:8] <- "s ubject 2"
+
+gsub("(\\w+)\\s(\\d+)", "\\1\\2", stringdata2$ID)
+gsub("\\s", "", stringdata2$ID)
+
+
+```
+
+### strsplit and colsplit
+
+```{r}
+library(reshape2)
+
+x <- c("some string of words", "some other sentence", "yet another one")
+strsplit(x, " ")
+unlist(strsplit(x, " "))
+
+unlist(strsplit(x, "\\w\\s\\w"))
+
+x <- "some text <get rid of this> more text"
+gsub("<(\\w+\\s*)+>\\s*", "", x)
+
+# use strsplit to separate "small_slow"
+x <- "small_slow"
+unlist(strsplit(x, "_"))
+
+# next, use strsplit to separate out two new columns from stringdata$condition column
+x <- "small_slow"
+unlist(strsplit(x, "_"))[1]
+unlist(strsplit(x, "_"))[2]
+
+
+stringdata$size <- 
+  sapply(as.character(stringdata$condition), function(myarg) { unlist(strsplit(myarg, "_"))[1] })
+
+stringdata$speed <- 
+  sapply(as.character(stringdata$condition), function(x) { unlist(strsplit(x, "_"))[2] })
+
+xtabs(~ size + speed + condition, stringdata) 
+
+# using colsplit for the same thing
+newcolumns <- colsplit(as.character(stringdata$condition), "_", names = c("size2", "speed2"))
+
+stringdata <- cbind(stringdata, newcolumns)
+
+xtabs(~ size2 + speed2 + condition, stringdata) 
+
+# using colsplit for condition2
+newcolumns <- colsplit(as.character(stringdata$condition), "_", names = c("size2", "speed2"))
+
+stringdata <- cbind(stringdata, newcolumns)
+
+xtabs(~ size2 + speed2 + condition, stringdata) 
+
+# using colsplit for condition4
+newcolumns <- colsplit(as.character(stringdata$condition), "_", names = c("size2", "speed2"))
+
+stringdata <- cbind(stringdata, newcolumns)
+
+xtabs(~ size2 + speed2 + condition, stringdata) 
+
+# using colsplit for condition3
+newcolumns <- colsplit(as.character(stringdata$condition), "_", names = c("size2", "speed2"))
+
+stringdata <- cbind(stringdata, newcolumns)
+
+xtabs(~ size2 + speed2 + condition, stringdata) 
+
+
+```
+
 
 
 # Practice
