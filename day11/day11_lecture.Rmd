@@ -1,0 +1,63 @@
+---
+title: "Day 11 Lecture"
+output: html_document
+---
+
+# HW 10 Review
+
+# Final projects and grades
+
+# Course recap, review, and suggestions for next steps
+
+# Strings
+
+  - regular expressions
+  - grep, grepl, gsub
+  - strsplit
+  - colsplit
+
+## Regular expressions
+
+  - string *matching*
+  - can match literal strings or more abstract *patterns*
+  - see ?regex for help
+  - regular expressions are NOT unique to R, so look for tips elsewhere, too
+  - in R strings, `\` is the "escape" character, and for special regex expressions you usually need to double-escape (see examples)
+  
+Some handy characters to know:
+  - `+` = match 1 or more of the previous character
+  - `*` = match 0 or more of the previous character
+  - `?` = the preceding item is optional (i.e., match 0 or 1 of the previous character). `?` appended to a repetition operator makes it "not greedy"
+  - `[ ]` = match 1 of the set of things inside the bracket
+  - `\w` = match a "word" character (i.e., letters and numbers).  NOTE: you need to double-escape this and the rest of the slashes below usually, like `\\w`
+  - `\d` = match digits
+  - `\s` = match a space character
+  - capital-letter versions of the above (`\W`, `\D`, `\S`) are the *negations* of those
+  - `\t` = match a "tab" character
+  - `\n` = match a "newline" character
+  - `^` = the "beginning edge" of a string
+  - `$` = the "ending edge" of a string
+  - {n} = the preceding character is matched n times
+  
+```{r}
+response.types <- c("(1) strong dispreference", "(2) mild dispreference", "(3) no preference", "(4) mild preference", "(5) strong preference", "(9) don't know")
+stringdata <- data.frame(ID = rep(paste("subject", 1:100), each = 4), 
+                         condition = rep(c("small_slow", "small_fast", 
+                                           "big_slow", "big_fast"), 100),
+                         condition2 = rep(c("small.slow", "small.fast", 
+                                           "big.slow", "big.fast"), 100),
+                         condition3 = rep(c("smallslow", "smallfast", 
+                                           "bigslow", "bigfast"), 100),
+                         condition4 = rep(c("SmallSlow", "SmallFast", 
+                                           "BigSlow", "BigFast"), 100),
+                         response = sample(response.types, 400, replace = TRUE))
+
+head(stringdata)
+summary(stringdata)
+
+
+
+```
+
+
+# Practice
