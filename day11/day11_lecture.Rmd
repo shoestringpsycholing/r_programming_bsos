@@ -79,7 +79,13 @@ colnames(stringdata)
 
 apply(stringdata, 2, function(x) grep("small", x))
 
-
+x <- "hi there"
+grepl("hi", x)
+grepl("^hi", x)
+grepl("there", x)
+grepl("^there", x)
+grepl("hi$", x)
+grepl("there$", x)
 
 
 ```
@@ -151,7 +157,6 @@ x <- "small_slow"
 unlist(strsplit(x, "_"))[1]
 unlist(strsplit(x, "_"))[2]
 
-
 stringdata$size <- 
   sapply(as.character(stringdata$condition), function(myarg) { unlist(strsplit(myarg, "_"))[1] })
 
@@ -168,29 +173,56 @@ stringdata <- cbind(stringdata, newcolumns)
 xtabs(~ size2 + speed2 + condition, stringdata) 
 
 # using colsplit for condition2
-newcolumns <- colsplit(as.character(stringdata$condition), "_", names = c("size2", "speed2"))
+newcolumns <- colsplit(as.character(stringdata$condition2), "\\.", names = c("size3", "speed3"))
 
 stringdata <- cbind(stringdata, newcolumns)
 
-xtabs(~ size2 + speed2 + condition, stringdata) 
+xtabs(~ size3 + speed3 + condition, stringdata) 
 
 # using colsplit for condition4
-newcolumns <- colsplit(as.character(stringdata$condition), "_", names = c("size2", "speed2"))
+newcolumns <- colsplit(as.character(stringdata$condition4), "[[:upper:]]", names = c("nothing", "size4", "speed4"))
+
+x <- "abcdef"
+gsub("abcdef", "X", x)
+sub("[abcdef]", "X", x)
+
+# \\w is equivalent to [0-9A-Za-z]
+# [:upper:] is equivalent to A-Z  (on a standard English keyboard locale)
+# [[:upper:]] is equivalent to [A-Z]
+# [_\\.\\s]  will match ONE of underscore, dot, space
 
 stringdata <- cbind(stringdata, newcolumns)
 
-xtabs(~ size2 + speed2 + condition, stringdata) 
+xtabs(~ size4 + speed4 + condition, stringdata) 
 
 # using colsplit for condition3
-newcolumns <- colsplit(as.character(stringdata$condition), "_", names = c("size2", "speed2"))
+x <- "bigfast"
+y <- "smallslow"
+# gsub("()()" ...
+# gsub("((big)|(small)) ...
+# gsub("((big)|(small))((fast)|(slow))" ...
 
-stringdata <- cbind(stringdata, newcolumns)
+gsub("((big)|(small))((fast)|(slow))", "\\1", x)
+gsub("((big)|(small))((fast)|(slow))", "\\4", x)
+gsub("((big)|(small))((fast)|(slow))", "\\1", y)
+gsub("((big)|(small))((fast)|(slow))", "\\4", y)
 
-xtabs(~ size2 + speed2 + condition, stringdata) 
+stringdata$size5 <- gsub("((big)|(small))((fast)|(slow))", "\\1", stringdata$condition3)
+
+stringdata$speed5 <- gsub("((big)|(small))((fast)|(slow))", "\\4", stringdata$condition3)
+  
+xtabs(~ size5 + speed5 + condition, stringdata) 
+
+x <- c("one", "\\wo", "three")
+gsub("\\\\", "", x)
+
+sometext <- readLines("day11/trialtext.txt")
+
 
 
 ```
 
 
-
 # Practice
+
+

@@ -1,0 +1,18 @@
+---
+title: "Day 11 Practice/Homework"
+output: html_document
+---
+
+Make a function that:
+  1. Runs the code in every .R script in a directory
+    - `dir()`
+    - `source()`
+  2. Returns the names of all the files you ran (without the .R extension)
+    - `sub()` or `gsub()`
+  3. Returns the names of all functions you loaded (assuming the .R scripts have functions
+    - HARD WAY 
+      - `readLines()`
+      - `gsub()`
+    - easier way
+      - `ls()`
+      
